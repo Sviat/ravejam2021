@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    
+    public static int sizeX { get; }
+    public static int sizeY { get; }
+
 }

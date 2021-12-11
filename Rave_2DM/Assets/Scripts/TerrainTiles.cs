@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TerrainTiles : Map
 {
-    public static int sizeX { get; }
-    public static int sizeY { get; }
-
+    private GameObject tilePrefab;
 
 
 }

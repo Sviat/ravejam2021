@@ -20,7 +20,7 @@ public class MapCreator : MonoBehaviour
 
     private void CreateMap(int x, int y, int seed)
     {
-        if (!isCreated)
+        if (isCreated)
             DeleteMap();
 
         map = new Map(x, y);

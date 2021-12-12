@@ -12,6 +12,9 @@ public class MapCreator : MonoBehaviour
     private bool isCreated;
     [SerializeField]
     private SpriteRenderer spritePrefab;
+    [SerializeField]
+    private Transform mapTiles;
+
 
     private void Start()
     {
@@ -37,7 +40,7 @@ public class MapCreator : MonoBehaviour
 
             map = new Map(x, y);
             map.spritePrefab = spritePrefab;
-            map.FillMapData(seed, transform);
+            map.FillMapData(seed, mapTiles);
             isCreated = true;
             mapCreatorSeed++;
         }
@@ -54,10 +57,17 @@ public class MapCreator : MonoBehaviour
                 for (int j = 0; j < map.sizeY; j++)
                     Destroy(map.mapTiles[i, j].tileGameObject.gameObject);
             isCreated = false;
+            // удалять также копии карт
         }
         else
             Debug.Log("Map doesn't exist. Create first");
-        
+    }
+
+    private void CopyMap()
+    {
+        Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity, transform);
+        Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, transform);
+        // Записывать в переменные, чтобы потом удалять
     }
 
     private void Update()
@@ -66,6 +76,9 @@ public class MapCreator : MonoBehaviour
             CreateMap(sizeX, sizeY, mapCreatorSeed);
         if (Input.GetKeyDown(KeyCode.D))
             DeleteMap();
+        if (Input.GetKeyDown(KeyCode.M))
+            CopyMap();
+
     }
 
 }

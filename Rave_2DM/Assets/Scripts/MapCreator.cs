@@ -18,16 +18,31 @@ public class MapCreator : MonoBehaviour
         isCreated = false;
     }
 
+    private bool CheckSize()
+    {
+        bool ret = true;
+        if (sizeX % 2 != 0)
+            ret = false;
+        if (sizeY % 2 == 0)
+            ret = false;
+        return ret;
+    }
+
     private void CreateMap(int x, int y, int seed)
     {
-        if (isCreated)
-            DeleteMap();
+        if (CheckSize())
+        {
+            if (isCreated)
+                DeleteMap();
 
-        map = new Map(x, y);
-        map.spritePrefab = spritePrefab;
-        map.FillMapData(seed);
-        isCreated = true;
-        mapCreatorSeed++;
+            map = new Map(x, y);
+            map.spritePrefab = spritePrefab;
+            map.FillMapData(seed, transform);
+            isCreated = true;
+            mapCreatorSeed++;
+        }
+        else
+            Debug.Log("Wrong sizeX, sizeY");
 
     }
 

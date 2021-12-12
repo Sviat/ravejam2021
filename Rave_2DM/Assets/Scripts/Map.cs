@@ -13,6 +13,7 @@ public class Map
     public int sizeY { get; }
     public SpriteRenderer spritePrefab;
     public Tiles[,] mapTiles;
+    private Transform parent;
 
     private Map()
     {
@@ -25,15 +26,16 @@ public class Map
         sizeY = y;
     }
 
-    public void FillMapData(int seed)
+    public void FillMapData(int seed, Transform parent)
     {
+        this.parent = parent;
         System.Random randomTiles = new System.Random(seed);
         System.Random randomRGB = new System.Random(seed);
         int maxRandom = HeightRGB.MAX_HEIGHT;
 
         InitTiles();
         FillMainDots(randomRGB);
-       // FillCorners();
+        FillFirst();
         DrawTiles();
     }
 
@@ -43,29 +45,40 @@ public class Map
             for (int j = 0; j < sizeY; j++)
             {
                 mapTiles[i, j] = new Tiles();
-                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j);
+                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent);
             }
     }
 
     private void FillMainDots(System.Random randomRGB)
     {
-        for (int i = 1; i < sizeX - 1; i += 2)
-            for (int j = 1; j < sizeY - 1; j += 2)
+        for (int i = 1; i < sizeX; i += 2)
+            for (int j = 1; j < sizeY; j += 2)
             {
                 mapTiles[i, j].SetHeight(ChooseRGB(randomRGB.Next(0, 3)));
                 FillAround(i, j);
-            }
+            } 
     }
 
     private void FillAround(int indX, int indY) 
-    {
-        for (int i = indX - 1; i < indX + 2; i++)
+    { 
+        for (int j = indY - 1; j < indY + 2; j++)
         {
-            mapTiles[i, indY - 1].height += mapTiles[indX, indY].height.Normalized2X();
-            mapTiles[i, indY + 1].height += mapTiles[indX, indY].height.Normalized2X();
+            mapTiles[indX-1, j].height += mapTiles[indX, indY].height.Normalized2X();
+            if ((indX+1) < sizeX)
+            mapTiles[indX+1, j].height += mapTiles[indX, indY].height.Normalized2X();
         }
-        mapTiles[indX - 1, indY].height += mapTiles[indX, indY].height.Normalized2X();
-        mapTiles[indX + 1, indY].height += mapTiles[indX, indY].height.Normalized2X();
+        mapTiles[indX, indY-1].height += mapTiles[indX, indY].height.Normalized();
+        mapTiles[indX, indY+1].height += mapTiles[indX, indY].height.Normalized();
+    }
+
+    private void FillFirst()
+    {
+        for (int j = 1; j < sizeY; j += 2)
+        {
+            mapTiles[0, j-1].height += mapTiles[sizeX - 1, j].height.Normalized();
+            mapTiles[0, j].height += mapTiles[sizeX - 1, j].height.Normalized2X();
+            mapTiles[0, j+1].height += mapTiles[sizeX - 1, j].height.Normalized();
+        }
     }
 
     private void DrawTiles()

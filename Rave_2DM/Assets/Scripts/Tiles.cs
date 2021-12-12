@@ -13,7 +13,7 @@ enum Resources
 public class Tiles
 {
     public HeightRGB height;
-    public SpriteRenderer tileGameObject; 
+    public SpriteRenderer tileGameObject;
     //private GameObject BuildedGameObject;
     //private bool canBuild;
 
@@ -32,9 +32,9 @@ public class Tiles
         this.height = height;
     }
 
-    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y)
+    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent)
     {
-        tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity);
+        tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity, parent);
     }
     public void DrawTile()
     {

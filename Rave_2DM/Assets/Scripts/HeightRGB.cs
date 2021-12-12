@@ -1,5 +1,8 @@
 public struct HeightRGB
 {
+    public static readonly int MAX_HEIGHT = 6;
+    public static readonly int DEFAULT_HEIGHT = 4;
+
     public int HeightR { get; set; }
     public int HeightG { get; set; }
     public int HeightB { get; set; }
@@ -15,7 +18,16 @@ public struct HeightRGB
     }
 
     public static HeightRGB operator +(HeightRGB a, HeightRGB b)
-        => new HeightRGB(a.HeightR + b.HeightR, a.HeightG + b.HeightG, a.HeightB + a.HeightB);
+    {
+        HeightRGB tmpHeight = new HeightRGB(a.HeightR + b.HeightR, a.HeightG + b.HeightG, a.HeightB + a.HeightB);
+        if (tmpHeight.HeightR > MAX_HEIGHT)
+            tmpHeight.HeightR = MAX_HEIGHT;
+        if (tmpHeight.HeightG > MAX_HEIGHT)
+            tmpHeight.HeightG = MAX_HEIGHT;
+        if (tmpHeight.HeightB > MAX_HEIGHT)
+            tmpHeight.HeightB = MAX_HEIGHT;
+        return tmpHeight;
+    }
 
     public static HeightRGB operator /(HeightRGB a, HeightRGB b)
     {

@@ -238,7 +238,8 @@ MonoBehaviour:
   sizeX: 5
   sizeY: 5
   mapCreatorSeed: 0
-  spritePrefab: {fileID: 519263295652116161, guid: b054c283e04215a4b95c60df98478de8, type: 3}
+  spritePrefab: {fileID: 7622029972270873640, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
+  defHeight: 0
 --- !u!4 &446598637
 Transform:
   m_ObjectHideFlags: 0

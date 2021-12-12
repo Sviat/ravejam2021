@@ -12,8 +12,6 @@ enum Resources
 
 public class Tiles
 {
-    public static readonly int MAX_HEIGHT = 6;
-
     public HeightRGB height;
     public SpriteRenderer tileGameObject; 
     //private GameObject BuildedGameObject;
@@ -40,7 +38,12 @@ public class Tiles
     }
     public void DrawTile()
     {
-        tileGameObject.color = new Color (height.HeightR * 255 / MAX_HEIGHT, height.HeightG * 255 / MAX_HEIGHT, height.HeightB * 255 / MAX_HEIGHT);
+        int maxHeight = HeightRGB.MAX_HEIGHT;
+        float R, G, B;
+        R = (float)height.HeightR / (float)maxHeight;
+        G = (float)height.HeightG / (float)maxHeight;
+        B = (float)height.HeightB / (float)maxHeight;
+        tileGameObject.color = new Color (R, G, B);
     }
 
 }

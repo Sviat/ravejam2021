@@ -29,7 +29,7 @@ public class Map
     {
         System.Random randomTiles = new System.Random(seed);
         System.Random randomRGB = new System.Random(seed);
-        int maxRandom = Tiles.MAX_HEIGHT;
+        int maxRandom = HeightRGB.MAX_HEIGHT;
 
         InitTiles();
         FillMainDots(randomRGB);
@@ -87,9 +87,11 @@ public class Map
 
     private HeightRGB ChooseRGB(int index) // Refactor later 
     {
-        HeightRGB hR = new HeightRGB(4, 0, 0);
-        HeightRGB hG = new HeightRGB(0, 4, 0);
-        HeightRGB hB = new HeightRGB(0, 0, 4);
+        int def = HeightRGB.DEFAULT_HEIGHT;
+
+        HeightRGB hR = new HeightRGB(def, 0, 0);
+        HeightRGB hG = new HeightRGB(0, def, 0);
+        HeightRGB hB = new HeightRGB(0, 0, def);
         List<HeightRGB> hList = new List<HeightRGB>();
         hList.Add(hR);
         hList.Add(hG);

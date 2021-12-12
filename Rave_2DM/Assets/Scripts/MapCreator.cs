@@ -21,14 +21,14 @@ public class MapCreator : MonoBehaviour
     private void CreateMap(int x, int y, int seed)
     {
         if (!isCreated)
-        {
-            map = new Map(x, y);
-            map.spritePrefab = spritePrefab;
-            map.FillMapData(seed);
-            isCreated = true;
-        }
-        else
-            Debug.Log("Map is already created. Delete first");
+            DeleteMap();
+
+        map = new Map(x, y);
+        map.spritePrefab = spritePrefab;
+        map.FillMapData(seed);
+        isCreated = true;
+        mapCreatorSeed++;
+
     }
 
     private void DeleteMap()

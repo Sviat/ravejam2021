@@ -65,25 +65,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7379024970648880895, guid: 53908bc6529be2841a46a6f5cf86a748, type: 3}
       propertyPath: m_Name
-      value: _Snow 1
+      value: _Iron
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 53908bc6529be2841a46a6f5cf86a748, type: 3}
---- !u!1 &4650087143979743727 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7379024970648880895, guid: 53908bc6529be2841a46a6f5cf86a748, type: 3}
-  m_PrefabInstance: {fileID: 2805739834973781776}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2717014118649769172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4650087143979743727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91541803ec9bf8c45843c8710fcbc241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -235,13 +235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc71b731ba283b44a8f23790cbba4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizeY: 0
-  tilesPrefabs:
-  - {fileID: 8574842236560065864, guid: 53908bc6529be2841a46a6f5cf86a748, type: 3}
-  - {fileID: 5835774039658121566, guid: 5b3507fc323b56043a2047f5aec83fb6, type: 3}
-  - {fileID: 5769120015809493592, guid: 5714a4c2b098cae4bb82554fb5d59fb5, type: 3}
+  sizeX: 5
+  sizeY: 5
   mapCreatorSeed: 0
+  spritePrefab: {fileID: 519263295652116161, guid: b054c283e04215a4b95c60df98478de8, type: 3}
 --- !u!4 &446598637
 Transform:
   m_ObjectHideFlags: 0

@@ -5,19 +5,16 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     [SerializeField]
-    public int sizeX, sizeY;
+    private int sizeX, sizeY;
     [SerializeField]
-    private TerrainTiles[] tilesPrefabs;
-    private TerrainTiles[,] mapTiles;
-    private System.Random randForTiles;
-    private int tileSize; // Now doesnt use (init in Start), but may be later
-    [SerializeField]
-    public int mapCreatorSeed;
+    private int mapCreatorSeed;
+    private Map map;
     private bool isCreated;
-       
+    [SerializeField]
+    private SpriteRenderer spritePrefab;
+
     private void Start()
     {
-        tileSize = 1;
         isCreated = false;
     }
 
@@ -25,26 +22,27 @@ public class MapCreator : MonoBehaviour
     {
         if (!isCreated)
         {
-            System.DateTime timeStart = System.DateTime.Now;
-            int maxRandom = tilesPrefabs.Length;
-
-            mapTiles = new TerrainTiles[x, y];
-            randForTiles = new System.Random(seed);
-
-            for (int i = 0; i < x; i++)
-                for (int j = 0; j < y; j++)
-                {
-                    int tileIndex = randForTiles.Next(0, maxRandom);
-                    mapTiles[i, j] = Instantiate(tilesPrefabs[tileIndex], new Vector2(i * tileSize, j * tileSize), 
-                        Quaternion.identity, transform);
-                }
-            Debug.Log($"Time for Map create = {System.DateTime.Now - timeStart}");
+            map = new Map(x, y);
+            map.spritePrefab = spritePrefab;
+            map.FillMapData(seed);
             isCreated = true;
         }
         else
-        {
             Debug.Log("Map is already created. Delete first");
+    }
+
+    private void DeleteMap()
+    {
+        if (isCreated)
+        {
+            for (int i = 0; i < map.sizeX; i++)
+                for (int j = 0; j < map.sizeY; j++)
+                    Destroy(map.mapTiles[i, j].tileGameObject.gameObject);
+            isCreated = false;
         }
+        else
+            Debug.Log("Map doesn't exist. Create first");
+        
     }
 
     private void Update()
@@ -55,15 +53,4 @@ public class MapCreator : MonoBehaviour
             DeleteMap();
     }
 
-    private void DeleteMap()
-    {
-        if (isCreated && mapTiles.Length >0)
-        {
-            foreach (var e in mapTiles)
-                Destroy(e.gameObject);
-            isCreated = false;
-        }
-        else
-            Debug.Log("There is no map. Create Map first");
-    }
 }

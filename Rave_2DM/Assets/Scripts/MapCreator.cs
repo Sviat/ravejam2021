@@ -22,12 +22,7 @@ public class MapCreator : MonoBehaviour
 
     private bool CheckSize()
     {
-        bool ret = true;
-        if (sizeX % 2 != 0)
-            ret = false;
-        if (sizeY % 2 == 0)
-            ret = false;
-        return ret;
+        return sizeX % 2 == 0 && sizeY % 2 != 0;
     }
 
     private void CreateMap(int x, int y, int seed)
@@ -41,7 +36,7 @@ public class MapCreator : MonoBehaviour
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapTiles);
             isCreated = true;
-            //mapCreatorSeed++;
+            mapCreatorSeed++;
         }
         else
             Debug.Log("Wrong sizeX, sizeY");

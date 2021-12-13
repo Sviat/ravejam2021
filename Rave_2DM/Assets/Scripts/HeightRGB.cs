@@ -12,6 +12,7 @@ public struct HeightRGB
     public int HeightR { get; }
     public int HeightG { get; }
     public int HeightB { get; }
+
     public HeightRGB(int R, int G, int B)
     {
         HeightR = R;

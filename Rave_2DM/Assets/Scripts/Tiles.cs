@@ -26,9 +26,9 @@ public class Tiles
     {
         int maxHeight = HeightRGB.MAX_HEIGHT;
         float R, G, B;
-        R = (float)height.HeightR / (float)maxHeight;
-        G = (float)height.HeightG / (float)maxHeight;
-        B = (float)height.HeightB / (float)maxHeight;
+        R = (float)height.R / (float)maxHeight;
+        G = (float)height.G / (float)maxHeight;
+        B = (float)height.B / (float)maxHeight;
         tileGameObject.color = new Color (R, G, B);
     }
 

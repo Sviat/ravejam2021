@@ -10,7 +10,7 @@
   <Class Name="Map">
     <Position X="10" Y="3.5" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAABAAIAAAAAAAoAABQAAEACBAAAAAAQ=</HashCode>
+      <HashCode>AAAAIAAAAAAAAABAAIAAAAAAAoAABQAAEACBAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -45,31 +45,10 @@
   <Struct Name="HeightRGB" Collapsed="true">
     <Position X="4" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAAACEAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAAAAAAAAAACAEAAQA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Enum Name="HeightValues">
-    <Position X="10.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAASAAAAAAAAAAAABAAAAAAAAAAAAAgQAQAAAAQAA=</HashCode>
-      <FileName>Assets\Scripts\Map.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="TempValues">
-    <Position X="8.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAgAAAAAAAAAAAAAAAIAAAACAQAAAAAAAICAAA=</HashCode>
-      <FileName>Assets\Scripts\Map.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="WaterValues">
-    <Position X="12.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgAAABAAAAAAAAAAAAAEAAAAAAAIEAAAAAAFAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Map.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Enum Name="PersonTypes">
     <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -89,6 +68,27 @@
     <TypeIdentifier>
       <HashCode>QQAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TileInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HeightValues">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAQAIAAAAACAACAAAAAAAAQAABAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeightRGB.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TempValues">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAABAAAAAAQAIAAAAAAAABDAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeightRGB.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WaterValues">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAgAAABQAAAAAAIAAEAAACAAA=</HashCode>
+      <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

@@ -7,7 +7,7 @@ enum HeightValues {R0, R2, R3, R4, R5, R6, R8}
 enum TempValues {G0, G2, G3, G4, G5, G6, G8}
 enum WaterValues {B0, B2, B3, B4, B5, B6, B8}
 
-public class Map 
+public class Map
 {
     public int sizeX { get; }
     public int sizeY { get; }
@@ -15,15 +15,31 @@ public class Map
     public Tiles[,] mapTiles;
     private Transform parent;
 
+    List<HeightRGB> baseHeigthList = new List<HeightRGB>();
+
     private Map()
     {
+        CreateHeightRGBList();
     }
 
     public Map(int x, int y)
     {
-        mapTiles = new Tiles[x,y];
+        mapTiles = new Tiles[x, y];
         sizeX = x;
         sizeY = y;
+        CreateHeightRGBList();
+    }
+
+    private void CreateHeightRGBList()
+    {
+        int def = HeightRGB.DEFAULT_HEIGHT;
+        HeightRGB hR = new HeightRGB(def, 0, 0);
+        HeightRGB hG = new HeightRGB(0, def, 0);
+        HeightRGB hB = new HeightRGB(0, 0, def);
+
+        baseHeigthList.Add(hR);
+        baseHeigthList.Add(hG);
+        baseHeigthList.Add(hB);
     }
 
     public void FillMapData(int seed, Transform parent)
@@ -54,30 +70,30 @@ public class Map
         for (int i = 1; i < sizeX; i += 2)
             for (int j = 1; j < sizeY; j += 2)
             {
-                mapTiles[i, j].SetHeight(ChooseRGB(randomRGB.Next(0, 3)));
+                mapTiles[i, j].SetHeight(baseHeigthList[randomRGB.Next(0, 3)]);
                 FillAround(i, j);
-            } 
+            }
     }
 
-    private void FillAround(int indX, int indY) 
-    { 
+    private void FillAround(int indX, int indY)
+    {
         for (int j = indY - 1; j < indY + 2; j++)
         {
-            mapTiles[indX-1, j].height += mapTiles[indX, indY].height.Normalized2X();
-            if ((indX+1) < sizeX)
-            mapTiles[indX+1, j].height += mapTiles[indX, indY].height.Normalized2X();
+            mapTiles[indX - 1, j].height += mapTiles[indX, indY].height.Normalized2X();
+            if ((indX + 1) < sizeX)
+                mapTiles[indX + 1, j].height += mapTiles[indX, indY].height.Normalized2X();
         }
-        mapTiles[indX, indY-1].height += mapTiles[indX, indY].height.Normalized();
-        mapTiles[indX, indY+1].height += mapTiles[indX, indY].height.Normalized();
+        mapTiles[indX, indY - 1].height += mapTiles[indX, indY].height.Normalized();
+        mapTiles[indX, indY + 1].height += mapTiles[indX, indY].height.Normalized();
     }
 
     private void FillFirst()
     {
         for (int j = 1; j < sizeY; j += 2)
         {
-            mapTiles[0, j-1].height += mapTiles[sizeX - 1, j].height.Normalized();
+            mapTiles[0, j - 1].height += mapTiles[sizeX - 1, j].height.Normalized();
             mapTiles[0, j].height += mapTiles[sizeX - 1, j].height.Normalized2X();
-            mapTiles[0, j+1].height += mapTiles[sizeX - 1, j].height.Normalized();
+            mapTiles[0, j + 1].height += mapTiles[sizeX - 1, j].height.Normalized();
         }
     }
 
@@ -89,18 +105,5 @@ public class Map
                 mapTiles[i, j].DrawTile();
             }
     }
-
-    private HeightRGB ChooseRGB(int index) // Refactor later 
-    {
-        int def = HeightRGB.DEFAULT_HEIGHT;
-
-        HeightRGB hR = new HeightRGB(def, 0, 0);
-        HeightRGB hG = new HeightRGB(0, def, 0);
-        HeightRGB hB = new HeightRGB(0, 0, def);
-        List<HeightRGB> hList = new List<HeightRGB>();
-        hList.Add(hR);
-        hList.Add(hG);
-        hList.Add(hB);
-        return hList[index];
-    }
 }
+

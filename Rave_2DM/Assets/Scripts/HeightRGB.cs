@@ -23,7 +23,7 @@ public struct HeightRGB
 
     public static HeightRGB operator +(HeightRGB a, HeightRGB b)
     {
-        HeightRGB tmpHeight = new HeightRGB(a.HeightR + b.HeightR, a.HeightG + b.HeightG, a.HeightB + a.HeightB);
+        HeightRGB tmpHeight = new HeightRGB(a.HeightR + b.HeightR, a.HeightG + b.HeightG, a.HeightB + b.HeightB);
         if (tmpHeight.HeightR > MAX_HEIGHT)
             tmpHeight.HeightR = MAX_HEIGHT;
         if (tmpHeight.HeightG > MAX_HEIGHT)

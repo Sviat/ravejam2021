@@ -2,24 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Resources
-{
-    none,
-    type1,
-    type2,
-    type3
-}
 
 public class Tiles
 {
     public HeightRGB height;
     public SpriteRenderer tileGameObject;
-    //private GameObject BuildedGameObject;
-    //private bool canBuild;
 
-   // private Resources resource; //Перенести в клетки по типу
-    //[Range(0, 1)]
-    //private float restOfResourses;
 
     public void SetHeight (int heightR, int heightG, int heightB)
     {

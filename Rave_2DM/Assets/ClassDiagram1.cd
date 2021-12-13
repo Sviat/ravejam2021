@@ -1,59 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Map">
-    <Position X="7" Y="0.5" Width="2" />
+  <Class Name="Buildings">
+    <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIQAAAAAAAAAAAAAAAAAAAoAAAIAAEACAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Buildings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map">
+    <Position X="10" Y="3.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIQAAAAAAAABAAAAAAAAAAoAABQAAEACBAAAAAAQ=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MapCreator">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+    <Position X="7.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAQAMAAAACAAAAAAAAAAAAAAAAAAAAAAEACAAEAAEAA=</HashCode>
+      <HashCode>AAQAMABABCAAAAAAAAAAAAAAAgAAAAAAEAGAAUAAEAA=</HashCode>
       <FileName>Assets\Scripts\MapCreator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tiles">
-    <Position X="4.5" Y="0.5" Width="2.25" />
+  <Class Name="Persons">
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAQAAAAAAAIQAAQAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAEYAAAAAAAAAAgAAAAAAAAIAAKAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Persons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileInfo">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\TileInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tiles">
+    <Position X="4" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAQAAAAAAAAQAAQAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Tiles.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="HeightRGB" Collapsed="true">
-    <Position X="1.5" Y="0.5" Width="1.5" />
+    <Position X="4" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAYAQAAAAAAAAAACEAAQAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Tiles.cs</FileName>
+      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAAACEAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Enum Name="HeightValues" Collapsed="true">
-    <Position X="1.5" Y="2" Width="1.5" />
+  <Enum Name="HeightValues">
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAASAAAAAAAAAAAABAAAAAAAAAAAAAgQAQAAAAQAA=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="TempValues" Collapsed="true">
-    <Position X="1.5" Y="3.5" Width="1.5" />
+  <Enum Name="TempValues">
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAgAAAAAAAAAAAAAAAIAAAACAQAAAAAAAICAAA=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="WaterValues" Collapsed="true">
-    <Position X="1.5" Y="2.75" Width="1.5" />
+  <Enum Name="WaterValues">
+    <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAABAAAAAAAAAAAAAEAAAAAAAIEAAAAAAFAAAAA=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Resources" Collapsed="true">
-    <Position X="1.5" Y="1.25" Width="1.5" />
+  <Enum Name="PersonTypes">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Persons.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CriminalArticles">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Persons.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GameResources">
+    <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QQAAAAAAAAAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Tiles.cs</FileName>
+      <FileName>Assets\Scripts\TileInfo.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

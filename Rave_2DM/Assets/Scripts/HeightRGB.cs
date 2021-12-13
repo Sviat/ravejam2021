@@ -3,9 +3,9 @@ public struct HeightRGB
     public static readonly int MAX_HEIGHT = 6;
     public static readonly int DEFAULT_HEIGHT = 4;
 
-    public int HeightR { get; set; }
-    public int HeightG { get; set; }
-    public int HeightB { get; set; }
+    public int HeightR { get; }
+    public int HeightG { get; }
+    public int HeightB { get; }
     public HeightRGB(int R, int G, int B)
     {
         HeightR = R;
@@ -18,30 +18,25 @@ public struct HeightRGB
     }
     public HeightRGB Normalized2X()
     {
-        return this*2 / this;
+        return Normalized() * 2;
     }
 
     public static HeightRGB operator +(HeightRGB a, HeightRGB b)
     {
-        HeightRGB tmpHeight = new HeightRGB(a.HeightR + b.HeightR, a.HeightG + b.HeightG, a.HeightB + b.HeightB);
-        if (tmpHeight.HeightR > MAX_HEIGHT)
-            tmpHeight.HeightR = MAX_HEIGHT;
-        if (tmpHeight.HeightG > MAX_HEIGHT)
-            tmpHeight.HeightG = MAX_HEIGHT;
-        if (tmpHeight.HeightB > MAX_HEIGHT)
-            tmpHeight.HeightB = MAX_HEIGHT;
-        return tmpHeight;
+        int tmpR, tmpG, tmpB;
+        tmpR = a.HeightR + b.HeightR;
+        tmpG = a.HeightG + b.HeightG;
+        tmpB = a.HeightB + b.HeightB;
+        return new HeightRGB(tmpR <= MAX_HEIGHT ? tmpR : MAX_HEIGHT, tmpG <= MAX_HEIGHT ? tmpG : MAX_HEIGHT, tmpB <= MAX_HEIGHT ? tmpB : MAX_HEIGHT);
     }
 
     public static HeightRGB operator /(HeightRGB a, HeightRGB b)
     {
-        if (b.HeightR != 0)
-            a.HeightR /= b.HeightR;
-        if (b.HeightG != 0)
-            a.HeightG /= b.HeightG;
-        if (b.HeightB != 0)
-            a.HeightB /= b.HeightB;
-        return a;
+        int tmpR, tmpG, tmpB;
+        tmpR = b.HeightR != 0 ? a.HeightR / b.HeightR : a.HeightR;
+        tmpG = b.HeightG != 0 ? a.HeightG / b.HeightG : a.HeightG;
+        tmpB = b.HeightB != 0 ? a.HeightB / b.HeightB : a.HeightB;
+        return new HeightRGB(tmpR, tmpG, tmpB);
     }
 
     public static HeightRGB operator *(HeightRGB a, int b)

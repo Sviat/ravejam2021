@@ -11,9 +11,7 @@ public class Tiles
 
     public void SetHeight (int heightR, int heightG, int heightB)
     {
-        height.HeightR = heightR;
-        height.HeightG = heightG;
-        height.HeightB = heightB;
+        height = new HeightRGB(heightR, heightG, heightB);
     }
     public void SetHeight(HeightRGB height)
     {

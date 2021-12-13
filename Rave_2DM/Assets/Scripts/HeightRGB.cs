@@ -1,3 +1,9 @@
+
+
+enum HeightValues { R0, R2, R3, R4, R5, R6, R8 }
+enum TempValues { G0, G2, G3, G4, G5, G6, G8 }
+enum WaterValues { B0, B2, B3, B4, B5, B6, B8 }
+
 public struct HeightRGB
 {
     public static readonly int MAX_HEIGHT = 6;

@@ -15,7 +15,6 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     private Transform mapTiles;
 
-
     private void Start()
     {
         isCreated = false;
@@ -42,7 +41,7 @@ public class MapCreator : MonoBehaviour
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapTiles);
             isCreated = true;
-            mapCreatorSeed++;
+            //mapCreatorSeed++;
         }
         else
             Debug.Log("Wrong sizeX, sizeY");

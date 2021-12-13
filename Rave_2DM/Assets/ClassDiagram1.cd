@@ -10,7 +10,7 @@
   <Class Name="Map">
     <Position X="10" Y="3.5" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIQAAAAAAAABAAAAAAAAAAoAABQAAEACBAAAAAAQ=</HashCode>
+      <HashCode>AAAAIAAAAAAAAABAAIAAAAAAAoAABQAAEACBAAAAAAQ=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Class>

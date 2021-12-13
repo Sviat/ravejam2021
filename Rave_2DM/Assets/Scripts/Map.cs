@@ -70,7 +70,7 @@ public class Map
         for (int i = 1; i < sizeX; i += 2)
             for (int j = 1; j < sizeY; j += 2)
             {
-                mapTiles[i, j].SetHeight(baseHeigthList[randomRGB.Next(0, 3)]);
+                mapTiles[i, j].SetHeight(baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)]);
                 FillAround(i, j);
             }
     }

@@ -6,9 +6,9 @@ using UnityEngine;
 public class Characters
 {
     public string name { get; protected set; }
-    private int x, y; // coord
-    private int HP; // cur HP
-    private int MAXHP;
+    private float x, y; 
+    private int HP; 
+    private int maxHP;
 }
 
 public class Robot : Characters
@@ -28,10 +28,23 @@ public class Robot : Characters
 }
 public class Prisioner : Characters
 {
-    private int age;
-    private int remainTimePrison;
-    private int timePrison;
-    private int datePrisioned;
+    public Prisioner(string name, int age, int prisonPeriod)
+    {
+        this.name = name;
+        this.age = age;
+        //datePrisoned = Today();
+        prisonTime = 0;
+        prisonExpirience = 0;
+        prisonEnlightment = 0;
+        this.prisonPeriod = prisonPeriod;
+    }
+
+    private int age;    
+    private int datePrisoned; //Начало заключения
+    private int prisonPeriod; //Срок заключения
+    private int prisonTime; // Дней в заключении. Добавить авто увеличение
+    private int prisonExpirience; // Опыт. Добавить увеличение от работы
+    private int prisonEnlightment; //Озарение? Тоже как-то изменяется
 
     public void DoWhatYouWant()
     {

@@ -16,7 +16,7 @@ enum CriminalArticles
     art2,
     art3
 }
-public class Persons : MonoBehaviour
+public class Characters : MonoBehaviour
 {
     private PersonTypes personType;
     private string personName;

@@ -10,28 +10,28 @@
   <Class Name="Map">
     <Position X="10" Y="3.5" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAABAAIAAAAAAAoAABQAAEACBAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAABACIAAAAAAAoAABQAAEACAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Map.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MapCreator">
     <Position X="7.25" Y="3.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAQAMABABCAAAAAAAAAAAAAAAgAAAAAAEAGAAUAAEAA=</HashCode>
+      <HashCode>AAQAMABABCAAAAAAAAAAAAAQAoAAAEAAEAGAAUAAEAA=</HashCode>
       <FileName>Assets\Scripts\MapCreator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Persons">
+  <Class Name="Characters">
     <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEYAAAAAAAAAAgAAAAAAAAIAAKAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Persons.cs</FileName>
+      <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TileInfo">
     <Position X="2.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAiAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAiAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Assets\Scripts\TileInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -40,6 +40,48 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAQAAAAAAAAQAAQAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Tiles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoods" Collapsed="true">
+    <Position X="19.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoodsGlobal" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoodsConvinct" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoodsNano" Collapsed="true">
+    <Position X="21.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoodsMarco" Collapsed="true">
+    <Position X="23.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TradeGoodsMicro" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="HeightRGB" Collapsed="true">
@@ -53,14 +95,14 @@
     <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Persons.cs</FileName>
+      <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="CriminalArticles">
     <Position X="1.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Persons.cs</FileName>
+      <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="GameResources">
@@ -89,6 +131,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAgAAABQAAAAAAIAAEAAACAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Convic" Collapsed="true">
+    <Position X="23.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

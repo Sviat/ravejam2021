@@ -15,7 +15,9 @@ public class TileInfo : Tiles
     private Buildings BuildedGameObject;
     private bool canBuild;
 
-    private GameResources resource; 
+    private TradeGoods good; 
     [Range(0, 1)]
     private float restOfResourses;
 }
+
+

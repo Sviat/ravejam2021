@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField]
-    private int sizeX, sizeY;
-    [SerializeField]
-    private int mapCreatorSeed;
+    [SerializeField] private int sizeX, sizeY;
+    [SerializeField] private int mapCreatorSeed;
+    [SerializeField] private SpriteRenderer spritePrefab;
     private Map map;
     private bool isCreated;
-    [SerializeField]
-    private SpriteRenderer spritePrefab;
-    [SerializeField]
-    private Transform mapTiles;
+    private Transform mapTiles, mapTilesLeft, mapTilesRight;
+    private string mapTileName = "MapTiles";
 
     private void Start()
     {
@@ -31,27 +28,31 @@ public class MapCreator : MonoBehaviour
         {
             if (isCreated)
                 DeleteMap();
-
+            CreateMapTileObject();
             map = new Map(x, y);
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapTiles);
+            CopyMap();
             isCreated = true;
             mapCreatorSeed++;
         }
         else
             Debug.Log("Wrong sizeX, sizeY");
+    }
 
+    private void CreateMapTileObject()
+    {
+        mapTiles = new GameObject().transform;
+        mapTiles.SetParent(transform);
+        mapTiles.name = mapTileName;
     }
 
     private void DeleteMap()
     {
         if (isCreated)
         {
-            for (int i = 0; i < map.sizeX; i++)
-                for (int j = 0; j < map.sizeY; j++)
-                    Destroy(map.mapTiles[i, j].tileGameObject.gameObject);
+            Destroy(mapTiles.gameObject);
             isCreated = false;
-            // удалять также копии карт
         }
         else
             Debug.Log("Map doesn't exist. Create first");
@@ -59,9 +60,8 @@ public class MapCreator : MonoBehaviour
 
     private void CopyMap()
     {
-        Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity, transform);
-        Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, transform);
-        // Записывать в переменные, чтобы потом удалять
+        mapTilesRight = Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity, mapTiles);
+        mapTilesLeft = Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, mapTiles);
     }
 
     private void Update()
@@ -70,9 +70,5 @@ public class MapCreator : MonoBehaviour
             CreateMap(sizeX, sizeY, mapCreatorSeed);
         if (Input.GetKeyDown(KeyCode.D))
             DeleteMap();
-        if (Input.GetKeyDown(KeyCode.M))
-            CopyMap();
-
     }
-
 }

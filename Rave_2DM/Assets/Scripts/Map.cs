@@ -41,10 +41,8 @@ public class Map
     {
         this.parent = parent;
         System.Random randomRGB = new System.Random(seed);
-        int maxRandom = HeightRGB.MAX_HEIGHT;
-
         InitTiles();
-        FillMainDots(randomRGB);
+        FillMapTiles(randomRGB);
         DrawTiles();
     }
 
@@ -57,7 +55,7 @@ public class Map
             }
     }
 
-    private void FillMainDots(System.Random randomRGB)
+    private void FillMapTiles(System.Random randomRGB) 
     {
         for (int i = 1; i < sizeX; i += 2)
             for (int j = 1; j < sizeY; j += 2)

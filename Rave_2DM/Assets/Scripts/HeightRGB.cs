@@ -23,7 +23,7 @@ public struct HeightRGB
     }
     public HeightRGB Normalized2X()
     {
-        return Normalized() * 2;
+        return Normalized()*2;
     }
 
     public static HeightRGB operator +(HeightRGB a, HeightRGB b)

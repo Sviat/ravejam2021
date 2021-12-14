@@ -31,7 +31,6 @@ public class Map
         HeightRGB hR = new HeightRGB(def, 0, 0);
         HeightRGB hG = new HeightRGB(0, def, 0);
         HeightRGB hB = new HeightRGB(0, 0, def);
-
         baseHeigthList.Add(hR);
         baseHeigthList.Add(hG);
         baseHeigthList.Add(hB);
@@ -76,6 +75,9 @@ public class Map
                     i = 0;
                     stopFlag = true;
                 }
+
+                if (x == 3 && y == 3)
+                    Debug.Log("123");
 
                 if (!(i == x && j == y))
                 {

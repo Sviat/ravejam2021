@@ -3,27 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-enum PersonTypes
+public class Characters
 {
-    Worker,
-    Scientist,
-    Other
+    public string name { get; protected set; }
+    private int x, y; // coord
+    private int HP; // cur HP
+    private int MAXHP;
 }
 
-enum CriminalArticles
+public class Robot : Characters
 {
-    art1,
-    art2,
-    art3
+    public Robot(string name)
+    {
+        this.name = name;
+    }
+    public void GoHunt(Prisioner prisioner)
+    {
+        Debug.Log("Go to hunt for " + prisioner.name);
+    }
+    public void WaitUntilNeedHunt()
+    {
+        Debug.Log("I'm waiting for hunting");                                                                                                                                               
+    }
 }
-public class Characters : MonoBehaviour
+public class Prisioner : Characters
 {
-    private PersonTypes personType;
-    private string personName;
     private int age;
     private int remainTimePrison;
     private int timePrison;
     private int datePrisioned;
-    private CriminalArticles criminalArticle;
 
+    public void DoWhatYouWant()
+    {
+        Debug.Log($"{name} {age} is doing what he want");
+    }
+}
+
+public class Animal : Characters
+{
+    public void WalkWhileAlive()
+    {
+        Debug.Log("I'm living here");
+    }
 }

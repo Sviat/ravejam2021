@@ -45,42 +45,42 @@
   <Class Name="TradeGoods" Collapsed="true">
     <Position X="19.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TradeGoodsGlobal" Collapsed="true">
     <Position X="19.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TradeGoodsConvinct" Collapsed="true">
     <Position X="14.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TradeGoodsNano" Collapsed="true">
     <Position X="21.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TradeGoodsMarco" Collapsed="true">
     <Position X="23.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TradeGoodsMicro" Collapsed="true">
     <Position X="17" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -133,10 +133,10 @@
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Convic" Collapsed="true">
+  <Enum Name="ConvicState" Collapsed="true">
     <Position X="23.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Enum>

@@ -75,10 +75,6 @@ public class Map
                     i = 0;
                     stopFlag = true;
                 }
-
-                if (x == 3 && y == 3)
-                    Debug.Log("123");
-
                 if (!(i == x && j == y))
                 {
                     if (i == x || j == y)

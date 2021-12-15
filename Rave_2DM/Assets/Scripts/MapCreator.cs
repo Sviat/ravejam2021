@@ -52,17 +52,17 @@ public class MapCreator : MonoBehaviour
     {
         if (isCreated)
         {
-            Destroy(mapTiles.gameObject);
+            for (int i = transform.childCount - 1; i >= 0; i--)
+                Destroy(transform.GetChild(i).gameObject);
             isCreated = false;
         }
-        else
-            Debug.Log("Map doesn't exist. Create first");
     }
 
     private void CopyMap()
     {
-        mapTilesRight = Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity, mapTiles);
-        mapTilesLeft = Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, mapTiles);
+        mapTilesRight = Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity);
+        mapTilesLeft = Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, transform);
+        mapTilesRight.SetParent(transform);
     }
 
     private void Update()

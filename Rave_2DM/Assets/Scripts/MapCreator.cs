@@ -15,6 +15,7 @@ public class MapCreator : MonoBehaviour
     private void Start()
     {
         isCreated = false;
+        CreateMap(sizeX, sizeY, mapCreatorSeed);
     }
 
     private bool CheckSize()

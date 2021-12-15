@@ -34,8 +34,8 @@ public class MapCreator : MonoBehaviour
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapTiles);
             CopyMap();
+            CenterMap();
             isCreated = true;
-            mapCreatorSeed++;
         }
         else
             Debug.Log("Wrong sizeX, sizeY");
@@ -56,6 +56,7 @@ public class MapCreator : MonoBehaviour
                 Destroy(transform.GetChild(i).gameObject);
             isCreated = false;
         }
+        transform.position = new Vector3(0, 0, 0);
     }
 
     private void CopyMap()
@@ -68,8 +69,16 @@ public class MapCreator : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+        {
             CreateMap(sizeX, sizeY, mapCreatorSeed);
+            mapCreatorSeed++;
+        }
         if (Input.GetKeyDown(KeyCode.D))
             DeleteMap();
+    }
+
+    private void CenterMap()
+    {
+        transform.position =new Vector3(((float)sizeX) / -2.0f, ((float)sizeY) / -2.0f, transform.position.z);
     }
 }

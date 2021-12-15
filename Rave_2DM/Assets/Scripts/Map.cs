@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Map
 {
-    public int sizeX { get; }
-    public int sizeY { get; }
+    public static int sizeX { get; private set; }
+    public static int sizeY { get; private set; }
     public SpriteRenderer spritePrefab;
     public Tiles[,] mapTiles;
     private Transform parent;

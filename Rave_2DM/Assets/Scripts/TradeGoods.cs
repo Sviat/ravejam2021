@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum TradeGoodsTypes
 {
+    Null = 0,
     GlobalMoney,
     ConvictIdle,
     ConvictEX,

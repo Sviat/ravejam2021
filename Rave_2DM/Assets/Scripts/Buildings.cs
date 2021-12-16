@@ -6,14 +6,15 @@ public struct BuildingPlan
 {
     TradeGoods tradeGoods;
     BuildingSlot slot;
-    HeightRGB landscape; 
+    HeightRGB landscape; // реализовать больще - меньше. 
 }
 
-public abstract class Buildings 
+public abstract class Buildings // обычный класс, каждое здание - инстанс класса. 
 {
-    protected Tiles tile; // Where is builded
+    protected Tile tile; // Where is builded
     protected SpriteRenderer sprite; // sprite for render
     protected BuildingPlan buildingPlan;
+    // can Enter the building& OnEnter()
 }
 
 public class BuildingFactory // For all or for each class?

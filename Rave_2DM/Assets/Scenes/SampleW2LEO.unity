@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.7499519
+  m_AspectRatio: 2.889395
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,8 +754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc71b731ba283b44a8f23790cbba4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 32
-  sizeY: 17
+  sizeX: 128
+  sizeY: 67
   mapCreatorSeed: 0
   spritePrefab: {fileID: 7622029972270873640, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
   tileSprites:

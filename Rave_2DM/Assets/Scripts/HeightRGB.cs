@@ -1,15 +1,19 @@
+using System;
+using Unity;
+using UnityEngine;
+
 public enum HeightValues { R0_DEEP_OCEAN, R1, R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
 public enum TempValues { G0_DETH_TEMP, G1, G2_COLD_LIFE_LOW, G3_COLD, G4_BEST, G5_WARM, G6_HEAT, G7, G8_HELL }
 public enum WaterValues { B0_OCEAN_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CLIMAT, B5_DRY_CLIMATE, B6_STEPPE, B7, B8_DESERT }
 
-public struct HeightRGB
+[Serializable] public struct HeightRGB 
 {
     public static readonly int MAX_HEIGHT = 8;
     public static readonly int DEFAULT_HEIGHT = 5;
 
-    public HeightValues R { get; }
-    public TempValues G { get; }
-    public WaterValues B { get; }
+    public HeightValues R;
+    public TempValues G;
+    public WaterValues B;
 
     public HeightRGB(int R, int G, int B)
     {

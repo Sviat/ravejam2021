@@ -7,7 +7,7 @@ public class Map
     public static int sizeX { get; private set; }
     public static int sizeY { get; private set; }
     public SpriteRenderer spritePrefab;
-    public Tiles[,] mapTiles;
+    private Tile[,] mapTiles;
     private Transform parent;
    
     List<HeightRGB> baseHeigthList = new List<HeightRGB>();
@@ -19,7 +19,7 @@ public class Map
 
     public Map(int x, int y, int R, int G, int B)
     {
-        mapTiles = new Tiles[x, y];
+        mapTiles = new Tile[x, y];
         sizeX = x;
         sizeY = y;
         CreateHeightRGBList(R, G, B);
@@ -54,7 +54,7 @@ public class Map
         for (int i = 0; i < sizeX; i++)
             for (int j = 0; j < sizeY; j++)
             {
-                mapTiles[i, j] = new Tiles();
+                mapTiles[i, j] = new Tile();
             }
     }
 

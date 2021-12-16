@@ -60,14 +60,14 @@
   <Class Name="MapCreator" Collapsed="true">
     <Position X="23.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAMABABCAAAAAAAAAAAAAQAoAAAEAAEAGAAUAAEAA=</HashCode>
+      <HashCode>AAQAMABABCAAAAAABCAAAAAQAoAAAEAAEAGAEUAAEAA=</HashCode>
       <FileName>Assets\Scripts\MapCreator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TileInfo" Collapsed="true">
     <Position X="15.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAiAQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAECAQAAAAAAACAAAAAAAAAwAAAAACAAAQAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TileInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -130,7 +130,7 @@
   <Struct Name="HeightRGB" Collapsed="true">
     <Position X="19.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAAAAAAAAAACAEAAQA=</HashCode>
+      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAACAAIAAAACAEAAQA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Struct>
@@ -144,28 +144,28 @@
   <Enum Name="HeightValues" Collapsed="true">
     <Position X="19.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAQAIAAAAACAACAAAAAAAAQAABAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAQAIAIAAACAACAAgAAAAAQAABAAAAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TempValues" Collapsed="true">
     <Position X="21.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAABAAAAAAQAIAAAAAAAABDAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAABAAAAAARAIAAAAAAAEBDAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="WaterValues" Collapsed="true">
     <Position X="21.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAgAAABQAAAAAAIAAEAAACAAA=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAgAAABQAAACAAIAAEAAACAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TradeGoodsTypes" Collapsed="true">
     <Position X="19.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAhCAhAAEAIAGACAABAQIIAABIAAAgAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAhCAhAAEAIAGACAABAQIIAABIAAAgAIAAAAAABA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Enum>

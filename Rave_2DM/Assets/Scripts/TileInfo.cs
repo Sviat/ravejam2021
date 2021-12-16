@@ -9,17 +9,17 @@ public enum BuildingSlot
 
 public class TileInfo : MonoBehaviour
 {
-    private Tiles tileSetInMap;
 
-    private Buildings BuildedGameObject;
-    private BuildingSlot buildingSlot;
+    [SerializeField] private Tile tileSetInMap;
+    private Buildings BuiltGameObject = null;
+    [SerializeField] private BuildingSlot buildingSlot;
     private bool canBuild;
 
-    private TradeGoods good; 
+    private TradeGoodsTypes good = TradeGoodsTypes.Null;
     [Range(0, 1)]
-    private float restOfResourses;
+    private float remainingResourses = 1;
 
-    public void SetTileInfo(Tiles tile)
+    public void SetTileInfo(Tile tile)
     {
         tileSetInMap = tile;
     }

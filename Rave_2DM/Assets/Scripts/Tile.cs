@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Tiles
+[System.Serializable] public class Tile
 {
-    public HeightRGB height;
+    [SerializeField] public HeightRGB height;
     public SpriteRenderer tileGameObject;
 
 

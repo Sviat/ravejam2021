@@ -78,9 +78,9 @@ public class Map
                 if (!(i == x && j == y))
                 {
                     if (i == x || j == y)
-                        mapTiles[i, j].height += mapTiles[x, y].height.Normalized2X();
+                        mapTiles[i, j].height += mapTiles[x, y].height.LineConnection();
                     else
-                        mapTiles[i, j].height += mapTiles[x, y].height.Normalized();
+                        mapTiles[i, j].height += mapTiles[x, y].height.DiagonalConnection();
                 }
             }
     }

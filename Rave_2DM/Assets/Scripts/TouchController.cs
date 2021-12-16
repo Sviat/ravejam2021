@@ -20,7 +20,7 @@ public class TouchController : MonoBehaviour, IPointerClickHandler, IDragHandler
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
             if (hit.collider != null)
             {
-                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                hit.collider.gameObject.GetComponent<TileInfo>().PrintData();
             }
         }
     }

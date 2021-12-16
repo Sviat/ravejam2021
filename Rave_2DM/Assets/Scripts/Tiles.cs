@@ -21,6 +21,7 @@ public class Tiles
     public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent)
     {
         tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity, parent);
+        tileGameObject.GetComponent<TileInfo>().SetTileInfo(this);
     }
     public void DrawTile()
     {

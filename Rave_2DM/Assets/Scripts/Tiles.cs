@@ -18,10 +18,33 @@ public class Tiles
         this.height = height;
     }
 
-    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent)
+    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent, Sprite[] tileSprites)
     {
         tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity, parent);
         tileGameObject.GetComponent<TileInfo>().SetTileInfo(this);
+
+        int index = 0;
+        switch (height.R)
+        {
+            case HeightValues.R0_DEEP_OCEAN:
+                index = 16;
+                break;
+            case HeightValues.R2_OCEAN:
+                index = 17;
+                break;
+            case HeightValues.R3_COAST:
+                index = 2;
+                break;
+            case HeightValues.R6_MOUNTAINS:
+                index = 4;
+                break;
+
+            default:
+                break;
+
+        }
+        tileGameObject.GetComponent<SpriteRenderer>().sprite = tileSprites[index];
+
     }
     public void DrawTile()
     {

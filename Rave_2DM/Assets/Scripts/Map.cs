@@ -9,31 +9,35 @@ public class Map
     public SpriteRenderer spritePrefab;
     public Tiles[,] mapTiles;
     private Transform parent;
-
+   
     List<HeightRGB> baseHeigthList = new List<HeightRGB>();
 
     private Map()
     {
-        CreateHeightRGBList();
+        
     }
 
-    public Map(int x, int y)
+    public Map(int x, int y, int R, int G, int B)
     {
         mapTiles = new Tiles[x, y];
         sizeX = x;
         sizeY = y;
-        CreateHeightRGBList();
+        CreateHeightRGBList(R, G, B);
     }
 
-    private void CreateHeightRGBList()
+    private void CreateHeightRGBList(int R, int G, int B)
     {
         int def = HeightRGB.DEFAULT_HEIGHT;
         HeightRGB hR = new HeightRGB(def, 0, 0);
         HeightRGB hG = new HeightRGB(0, def, 0);
         HeightRGB hB = new HeightRGB(0, 0, def);
-        baseHeigthList.Add(hR);
-        baseHeigthList.Add(hG);
-        baseHeigthList.Add(hB);
+
+        for (int i = 0; i < R; i++)
+            baseHeigthList.Add(hR);
+        for (int i = 0; i < G; i++)
+            baseHeigthList.Add(hG);
+        for (int i = 0; i < B; i++)
+            baseHeigthList.Add(hB);
     }
 
     public void FillMapData(int seed, Transform parent)
@@ -42,7 +46,7 @@ public class Map
         System.Random randomRGB = new System.Random(seed);
         InitTiles();
         FillMapTiles(randomRGB);
-        DrawTiles();
+       // DrawTiles();
     }
 
     private void InitTiles()
@@ -85,13 +89,13 @@ public class Map
             }
     }
 
-    private void DrawTiles()
+    public void DrawTiles(Sprite[] tileSprites)
     {
         for (int i = 0; i < sizeX; i++)
             for (int j = 0; j < sizeY; j++)
             {
-                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent);
-                mapTiles[i, j].DrawTile();
+                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent, tileSprites);
+                //mapTiles[i, j].DrawTile();
             }
     }
 }

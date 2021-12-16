@@ -7,10 +7,13 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private int sizeX, sizeY;
     [SerializeField] private int mapCreatorSeed;
     [SerializeField] private SpriteRenderer spritePrefab;
+    [SerializeField] private Sprite[] tileSprites;
     private Map map;
     private bool isCreated;
     private Transform mapTiles, mapTilesLeft, mapTilesRight;
     private string mapTileName = "MapTiles";
+
+    public int countR, countG, countB;
 
     private void Start()
     {
@@ -30,9 +33,10 @@ public class MapCreator : MonoBehaviour
             if (isCreated)
                 DeleteMap();
             CreateMapTileObject();
-            map = new Map(x, y);
+            map = new Map(x, y, countR, countG, countB);
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapTiles);
+            map.DrawTiles(tileSprites);
             CopyMap();
             CenterMap();
             isCreated = true;

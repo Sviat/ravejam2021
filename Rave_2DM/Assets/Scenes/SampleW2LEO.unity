@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 3.5175242
+  m_AspectRatio: 0.7499519
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,6 +775,12 @@ MonoBehaviour:
   - {fileID: 5398332093921967667, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: 4692571688198065327, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: 2841424008411121574, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 21300000, guid: 757c7670d88e17e4ba0e0c3d6d05284b, type: 3}
+  - {fileID: 21300000, guid: 416a8ae1c3985e84eb4997063dcd3800, type: 3}
+  - {fileID: 21300000, guid: bf3595e850817eb45aa23182b364ec4f, type: 3}
+  countR: 1
+  countG: 1
+  countB: 1
 --- !u!4 &446598637
 Transform:
   m_ObjectHideFlags: 0

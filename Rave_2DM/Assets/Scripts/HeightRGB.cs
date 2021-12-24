@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum HeightValues { R0_DEEP_OCEAN, R1, R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
 public enum TempValues { G0_DETH_TEMP, G1, G2_COLD_LIFE_LOW, G3_COLD, G4_BEST, G5_WARM, G6_HEAT, G7, G8_HELL }
-public enum WaterValues { B0_OCEAN_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CLIMAT, B5_DRY_CLIMATE, B6_STEPPE, B7, B8_DESERT }
+public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CLIMAT, B5_DRY_CLIMATE, B6_STEPPE, B7, B8_DESERT }
 
 [Serializable] public struct HeightRGB 
 {
@@ -61,5 +61,5 @@ public enum WaterValues { B0_OCEAN_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CL
         => new HeightRGB((int) a.R / b, (int) a.G / b, (int) a.B / b);
 
     public static HeightRGB operator /(HeightRGB a, float b)
-    => new HeightRGB((int)((int)a.R / b), (int)((int)a.G / b),(int)((int)a.B / b));
+    => new HeightRGB((int)((float)a.R / b), (int)((float)a.G / b),(int)((float)a.B / b));
 };

@@ -40,7 +40,6 @@ public class MapCreator : MonoBehaviour
             map = new Map(x, y, countR5);
             map.spritePrefab = spritePrefab;
             map.FillMapData(seed, mapCenter, tempCurve);
-            RGB = (true, true, true);
             map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
             //CopyMap();
             CenterMap();

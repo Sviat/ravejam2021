@@ -11,64 +11,80 @@ public class Map
     private Transform parent;
    
     List<HeightRGB> baseHeigthList = new List<HeightRGB>();
+    private float lineRatio = 1.65f;
+    private float diagonalRatio = 2.5f;
 
     private Map()
     {
         
     }
 
-    public Map(int x, int y, int R, int G, int B)
+    public Map(int x, int y, int countR5)
     {
         mapTiles = new Tile[x, y];
         sizeX = x;
         sizeY = y;
-        CreateHeightRGBList(R, G, B);
+        CreateHeightRGBList(countR5);
     }
 
-    private void CreateHeightRGBList(int R, int G, int B)
+    private void CreateHeightRGBList(int countR5)
     {
         int def = HeightRGB.DEFAULT_HEIGHT;
-        HeightRGB hR = new HeightRGB(def, 0, 0);
-        HeightRGB hG = new HeightRGB(0, def, 0);
-        HeightRGB hB = new HeightRGB(0, 0, def);
+        HeightRGB hR0 = new HeightRGB((int)HeightValues.R0_DEEP_OCEAN, 0, 0);
+        HeightRGB hR4 = new HeightRGB((int)HeightValues.R4_PLAIN, 0, 0);
+        HeightRGB hR5 = new HeightRGB((int)HeightValues.R5_HILLS, 0, 0);
+        HeightRGB hR6 = new HeightRGB((int)HeightValues.R6_MOUNTAINS, 0, 0);
 
-        for (int i = 0; i < R; i++)
-            baseHeigthList.Add(hR);
-        for (int i = 0; i < G; i++)
-            baseHeigthList.Add(hG);
-        for (int i = 0; i < B; i++)
-            baseHeigthList.Add(hB);
+        baseHeigthList.Add(hR0);
+        baseHeigthList.Add(hR4);
+        baseHeigthList.Add(hR6);
+
+        for (int i = 0; i < countR5; i++)
+            baseHeigthList.Add(hR5);
     }
 
-    public void FillMapData(int seed, Transform parent)
+    public void FillMapData(int seed, Transform parent, AnimationCurve tempCurve)
     {
-        this.parent = parent;
         System.Random randomRGB = new System.Random(seed);
-        InitTiles();
-        FillMapTiles(randomRGB);
-       // DrawTiles();
+        this.parent = parent;
+        InitTilesTemperature();
+        FillHeightValues(randomRGB);
+        FillTempValues(tempCurve);
     }
 
-    private void InitTiles()
+    private void FillTempValues(AnimationCurve tempCurve)
+    {
+        float temp;
+        for (int i = 0; i < sizeX; i++)
+            for (int j = 0; j < sizeY; j++)
+            {
+                temp = tempCurve.Evaluate((float) j / sizeY) * HeightRGB.MAX_TEMP;
+                temp = Mathf.Round(temp);
+                mapTiles[i, j].SetHeight((int)mapTiles[i, j].height.R, (int) temp, (int)mapTiles[i, j].height.B);
+            }
+    }
+
+    private void InitTilesTemperature()
     {
         for (int i = 0; i < sizeX; i++)
             for (int j = 0; j < sizeY; j++)
             {
                 mapTiles[i, j] = new Tile();
+                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent);
             }
     }
 
-    private void FillMapTiles(System.Random randomRGB) 
+    private void FillHeightValues(System.Random randomRGB) 
     {
         for (int i = 1; i < sizeX; i += 2)
             for (int j = 1; j < sizeY; j += 2)
             {
                 mapTiles[i, j].SetHeight(baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)]);
-                FillAround(i, j);
+                FillAroundHeight(i, j);
             }
     }
 
-    private void FillAround(int x, int y)
+    private void FillAroundHeight(int x, int y)
     {
         bool stopFlag = false;
         for (int i = x - 1; i <= x + 1 && !stopFlag; i++)
@@ -82,21 +98,23 @@ public class Map
                 if (!(i == x && j == y))
                 {
                     if (i == x || j == y)
-                        mapTiles[i, j].height += mapTiles[x, y].height.LineConnection();
+                        mapTiles[i, j].height += mapTiles[x, y].height / lineRatio;
                     else
-                        mapTiles[i, j].height += mapTiles[x, y].height.DiagonalConnection();
+                        mapTiles[i, j].height += mapTiles[x, y].height / diagonalRatio;
                 }
             }
     }
 
-    public void DrawTiles(Sprite[] tileSprites)
+    public void DrawTiles(bool r, bool g, bool b)
     {
+        System.DateTime time = System.DateTime.Now;       
         for (int i = 0; i < sizeX; i++)
             for (int j = 0; j < sizeY; j++)
-            {
-                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent, tileSprites);
-                //mapTiles[i, j].DrawTile();
+            {   
+                mapTiles[i, j].DrawTile(r, g, b);
             }
+        Debug.Log($"Draw time = {System.DateTime.Now - time}");
+        
     }
 }
 

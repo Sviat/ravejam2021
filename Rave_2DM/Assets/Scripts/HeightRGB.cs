@@ -10,6 +10,7 @@ public enum WaterValues { B0_OCEAN_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CL
 {
     public static readonly int MAX_HEIGHT = 8;
     public static readonly int DEFAULT_HEIGHT = 5;
+    public static readonly int MAX_TEMP = 6;
 
     public HeightValues R;
     public TempValues G;
@@ -55,6 +56,10 @@ public enum WaterValues { B0_OCEAN_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CL
 
     public static HeightRGB operator *(HeightRGB a, int b)
         => new HeightRGB((int) a.R * (int) b, (int) a.G * (int) b, (int) a.B * b);
+
     public static HeightRGB operator /(HeightRGB a, int b)
         => new HeightRGB((int) a.R / b, (int) a.G / b, (int) a.B / b);
+
+    public static HeightRGB operator /(HeightRGB a, float b)
+    => new HeightRGB((int)((int)a.R / b), (int)((int)a.G / b),(int)((int)a.B / b));
 };

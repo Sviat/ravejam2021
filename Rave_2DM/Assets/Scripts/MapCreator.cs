@@ -11,11 +11,13 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private Sprite[] tileSprites;
     private Map map;
     private bool isCreated;
-    private Transform mapTiles, mapTilesLeft, mapTilesRight;
-    private string mapTileName = "MapTiles";
+    private Transform mapCenter, mapLeft, mapRight;
+    private string mapName = "MapTiles";
 
-    public int countR, countG, countB;
-
+    [SerializeField] private int countR5;
+    [SerializeField] private AnimationCurve tempCurve;
+    private (bool, bool, bool) RGB = (true, true, true);
+    private bool rgbChanged = false;
     private void Start()
     {
         isCreated = false;
@@ -31,16 +33,19 @@ public class MapCreator : MonoBehaviour
     {
         if (CheckSize())
         {
+            System.DateTime time =System.DateTime.Now;
             if (isCreated)
-                DeleteMap();
+                DeleteMap();    
             CreateMapTileObject();
-            map = new Map(x, y, countR, countG, countB);
+            map = new Map(x, y, countR5);
             map.spritePrefab = spritePrefab;
-            map.FillMapData(seed, mapTiles);
-            map.DrawTiles(tileSprites);
-            CopyMap();
+            map.FillMapData(seed, mapCenter, tempCurve);
+            RGB = (true, true, true);
+            map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
+            //CopyMap();
             CenterMap();
             isCreated = true;
+            Debug.Log($"Map create time = {System.DateTime.Now - time}");
         }
         else
             Debug.Log("Wrong sizeX, sizeY");
@@ -48,9 +53,9 @@ public class MapCreator : MonoBehaviour
 
     private void CreateMapTileObject()
     {
-        mapTiles = new GameObject().transform;
-        mapTiles.SetParent(transform);
-        mapTiles.name = mapTileName;
+        mapCenter = new GameObject().transform;
+        mapCenter.SetParent(transform);
+        mapCenter.name = mapName;
     }
 
     private void DeleteMap()
@@ -66,9 +71,9 @@ public class MapCreator : MonoBehaviour
 
     private void CopyMap()
     {
-        mapTilesRight = Instantiate(mapTiles, new Vector2(mapTiles.position.x + sizeX, mapTiles.position.y), Quaternion.identity);
-        mapTilesLeft = Instantiate(mapTiles, new Vector2(mapTiles.position.x - sizeX, mapTiles.position.y), Quaternion.identity, transform);
-        mapTilesRight.SetParent(transform);
+        mapRight = Instantiate(mapCenter, new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y), Quaternion.identity);
+        mapLeft = Instantiate(mapCenter, new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y), Quaternion.identity, transform);
+        mapRight.SetParent(transform);
     }
 
     private void Update()
@@ -80,6 +85,29 @@ public class MapCreator : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D))
             DeleteMap();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            RGB.Item1 = !RGB.Item1;
+            rgbChanged = true;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            RGB.Item2 = !RGB.Item2;
+            rgbChanged = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            RGB.Item3 = !RGB.Item3;
+            rgbChanged = true;
+        }
+
+        if (rgbChanged)
+        {
+            map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
+            rgbChanged = false;
+        }
     }
 
     private void CenterMap()

@@ -9,84 +9,68 @@ public struct BuildingPlan
     HeightRGB landscape; // реализовать больще - меньше. 
 }
 
-public abstract class Buildings // обычный класс, каждое здание - инстанс класса. 
+
+public enum BuildingTypes
+{
+    ExploitWood,
+    ExploitMetal,
+    ExploitStone,
+    ExploitFish,
+    ExploitAnimals,
+    ExploitSoil,
+    FactoryMountain,
+    FactoryJungle,
+    FactoryOcean,
+    FactoryDesert,
+    InfraColonyCenter,
+    InfraPowerSolar,
+    InfraPowerWind,
+    InfraPowerThermal,
+    InfraPowerBurn,
+    CivilHouse,
+    CivilTower,
+    CivilCosmodrome,
+    CivilArena,
+    CivilTavern,
+    CivilHotel,
+    CivilCasino,
+    CivilLibrary,
+    NativeRuinMountain,
+    NativeRuinJungle,
+    NativeRuinOcean,
+    NativeRuinDesert
+}
+
+public class Buildings // обычный класс, каждое здание - инстанс класса. 
 {
     protected Tile tile; // Where is builded
     protected SpriteRenderer sprite; // sprite for render
     protected BuildingPlan buildingPlan;
     // can Enter the building& OnEnter()
-}
 
-public class BuildingFactory // For all or for each class?
-{
-    
-}
-
-enum ExploiBuildingTypes
-{
-    Wood, 
-    Metal, 
-    Stone, 
-    Fish,
-    Animals,
-    Soil
-}
-public class ExploitBuildings : Buildings
-{
-    Dictionary<ExploiBuildingTypes, int> powerUsage;
-}
-
-enum FactoryBuildingsTypes
-{
-    Mountain,
-    Jungle,
-    Ocean,
-    Desert
-}
-public class FactoryBuildings : Buildings
-{
-    Dictionary<FactoryBuildingsTypes, int> powerUsage;
-}
-
-enum InfrastructureBuildingsTypes
-{
-    ColonyCenter,
-    PowerSolar,
-    PowerWind,
-    PowerThermal,
-    PowerBurn,
-    House,
-    Tower,
-    Cosmodrome
-}
-public class InfrastructureBuildings : Buildings
-{
-    Dictionary<InfrastructureBuildingsTypes, int> powerUsage;
+    protected Dictionary<BuildingTypes, float> powerUsage;
+    public virtual Dictionary<BuildingTypes, float> PowerUsage
+    {
+        get
+        {
+            return powerUsage;
+        }
+        set
+        {
+            powerUsage = value;
+        }
+    }
 }
 
 
-enum CivilBuildingsTypes
-{
-    Arena,
-    Tavern,
-    Hotel,
-    Casino,
-    Library
-}
 public class CivilBuildings : Buildings
 {
-    Dictionary<CivilBuildings, int> powerUsage;
+    public override Dictionary<BuildingTypes, float> PowerUsage { get; set; }
+    // Check type only Civil;
 }
-
-enum NativeBuildingsTypes
-{
-    RuinMountain,
-    RuinJungle,
-    RuinOcean,
-    RuinDesert
-}
-
 public class NativeBuildings : Buildings
 {
-    Dictionary<NativeBuildingsTypes, int> powerUsage;
+    public override Dictionary<BuildingTypes, float> PowerUsage { get; set; }
+    // Check type only Civil;
 }
+

@@ -18,41 +18,20 @@ using UnityEngine;
         this.height = height;
     }
 
-    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent, Sprite[] tileSprites)
+    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent)
     {
         tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity, parent);
         tileGameObject.GetComponent<TileInfo>().SetTileInfo(this);
-
-        int index = 0;
-        switch (height.R)
-        {
-            case HeightValues.R0_DEEP_OCEAN:
-                index = 16;
-                break;
-            case HeightValues.R2_OCEAN:
-                index = 17;
-                break;
-            case HeightValues.R3_COAST:
-                index = 2;
-                break;
-            case HeightValues.R6_MOUNTAINS:
-                index = 4;
-                break;
-
-            default:
-                break;
-
-        }
-        tileGameObject.GetComponent<SpriteRenderer>().sprite = tileSprites[index];
-
     }
-    public void DrawTile()
+
+    public void DrawTile(bool r, bool g, bool b)
     {
         int maxHeight = HeightRGB.MAX_HEIGHT;
         float R, G, B;
-        R = (float)height.R / (float)maxHeight;
-        G = (float)height.G / (float)maxHeight;
-        B = (float)height.B / (float)maxHeight;
+        R = G = B = 0;
+        if (r) R = (float)height.R / (float)maxHeight;
+        if (g) G = (float)height.G / (float)maxHeight;
+        if (b) B = (float)height.B / (float)maxHeight;
         tileGameObject.color = new Color (R, G, B);
     }
 

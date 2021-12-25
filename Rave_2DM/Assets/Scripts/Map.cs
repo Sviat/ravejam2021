@@ -1,32 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Map
+[Serializable] public class Map
 {
     public static int SizeX { get; private set; }
     public static int SizeY { get; private set; }
-    public SpriteRenderer spritePrefab;
-    private readonly Tile[,] mapTiles;
-    private Transform parent;
-   
+    [SerializeField] private List<Tile> mTiles;
+    private List<TileInfo> tInfos;
+
     List<HeightRGB> baseHeigthList = new List<HeightRGB>();
-    private readonly float lineRatio = 1.65f;
-    private readonly float diagonalRatio = 2.5f;
-    private readonly int RareHumidityConst = 1;
-    private readonly int countR5;
+
+    private float lineRatio = 1.65f;
+    private float diagonalRatio = 2.5f;
+    private int RareHumidityConst = 1;
+    private int countR5;
 
     private Map()
     {
-        
+       
     }
 
-    public Map(int x, int y, int countR5)
+    public Map(int x, int y, int countR5, int seed, AnimationCurve tempCurve)
     {
-        mapTiles = new Tile[x, y];
         SizeX = x;
         SizeY = y;
+        mTiles = new List<Tile>();
+        tInfos = new List<TileInfo>();
         this.countR5 = countR5;
+        FillMapData(seed, tempCurve);
+    }
+
+    public List<(int,int)> FindTileByRGB(HeightRGB height)
+    {
+        List<(int,int)> indexXY = new List<(int,int)>();
+        foreach (var e in mTiles)
+        {
+            if (e.Height == height)
+                indexXY.Add((e.X, e.Y));
+        }
+        return indexXY;
+    }
+
+    public void FillMapData(int seed, AnimationCurve tempCurve)
+    {
+        System.Random randomRGB = new System.Random(seed);
+        CreateHeightRGBList(countR5);
+        InitTiles();
+        FillHeightTempValues(randomRGB, tempCurve);
+        FillWaterValues(seed);
     }
 
     private void CreateHeightRGBList(int countR5)
@@ -46,15 +69,13 @@ public class Map
             baseHeigthList.Add(hR5);
     }
 
-    public void FillMapData(int seed, Transform parent, AnimationCurve tempCurve)
+    private void InitTiles()
     {
-        System.Random randomRGB = new System.Random(seed);
-        this.parent = parent;
-        CreateHeightRGBList(countR5);
-        InitTiles();
-        FillHeightValues(randomRGB, tempCurve);
-        //FillTempValues(tempCurve);
-        FillWaterValues(seed);
+        for (int i = 0; i < SizeX; i++)
+            for (int j = 0; j < SizeY; j++)
+            {
+                mTiles.Add(new Tile(i, j));
+            }
     }
 
     private void FillWaterValues(int seed)
@@ -62,13 +83,16 @@ public class Map
         System.Random randomW = new System.Random(seed);
         HeightValues R;
         TempValues G;
+        WaterValues B;
 
         for (int i = 0; i < SizeX; i++)
             for (int j = 0; j < SizeY; j++)
             {
-                R = mapTiles[i, j].height.R;
-                G = mapTiles[i, j].height.G;
-                mapTiles[i, j].height.B = RG_to_B(R, G, randomW);
+                int mIndex = ListIndex(i, j);
+                R = mTiles[mIndex].R;
+                G = mTiles[mIndex].G;
+                B = RG_to_B(R, G, randomW);
+                mTiles[mIndex].B = B;
             }
     }
 
@@ -93,7 +117,7 @@ public class Map
         min = (int)R < (int)G ? (int)R : (int)G;
         max = (int)R > (int)G ? (int)R + 1 : (int)G + 1;
         waterLevel = random.Next(min, max);
-        
+
         if (waterLevel == 1)
             waterLevel = 2;
         if (waterLevel == 7)
@@ -106,28 +130,25 @@ public class Map
     private void FillTemp(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
     {
         float temp;
-        temp = tempCurve.Evaluate((float) y / SizeY) * ((int)HeightRGB.DEFAULT_TEMP + tempAddRatio);
+        temp = tempCurve.Evaluate((float)y / SizeY) * ((int)HeightRGB.DEFAULT_TEMP + tempAddRatio);
         temp = Mathf.Round(temp);
-        mapTiles[x, y].SetHeight((int)mapTiles[x, y].height.R, (int)temp, (int)mapTiles[x, y].height.B);
+
+        int R = (int)mTiles[ListIndex(x, y)].R;
+        int G = (int)temp;
+        int B = (int)mTiles[ListIndex(x, y)].B;
+
+       mTiles[ListIndex(x, y)].SetHeight(R, G, B);
     }
 
-    private void InitTiles()
-    {
-        for (int i = 0; i < SizeX; i++)
-            for (int j = 0; j < SizeY; j++)
-            {
-                mapTiles[i, j] = new Tile();
-                mapTiles[i, j].SetSpriteToTile(spritePrefab, i, j, parent);
-            }
-    }
-
-    private void FillHeightValues(System.Random randomRGB, AnimationCurve tempCurve) 
+    private void FillHeightTempValues(System.Random randomRGB, AnimationCurve tempCurve)
     {
         for (int i = 1; i < SizeX; i += 2)
             for (int j = 1; j < SizeY; j += 2)
             {
-                mapTiles[i, j].SetHeight(baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)]);
-                FillTemp(tempCurve, i, j, randomRGB.Next(0,2));
+                HeightRGB h = baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)];
+
+                mTiles[ListIndex(i, j)].SetHeight(h);
+                FillTemp(tempCurve, i, j, randomRGB.Next(0, 2));
                 FillAroundHeight(i, j);
             }
     }
@@ -135,6 +156,7 @@ public class Map
     private void FillAroundHeight(int x, int y)
     {
         bool stopFlag = false;
+        float ratio;
         for (int i = x - 1; i <= x + 1 && !stopFlag; i++)
             for (int j = y - 1; j <= y + 1; j++)
             {
@@ -143,23 +165,45 @@ public class Map
                     i = 0;
                     stopFlag = true;
                 }
+
                 if (!(i == x && j == y))
                 {
                     if (i == x || j == y)
-                        mapTiles[i, j].height += mapTiles[x, y].height / lineRatio;
+                        ratio = lineRatio;
                     else
-                        mapTiles[i, j].height += mapTiles[x, y].height / diagonalRatio;
+                        ratio = diagonalRatio;
+
+                    mTiles[ListIndex(i, j)].AddHeight(mTiles[ListIndex(x, y)].Height / ratio);
                 }
             }
     }
 
-    public void DrawTiles(bool r, bool g, bool b)
+    private int ListIndex(int x, int y)
     {
-        for (int i = 0; i < SizeX; i++)
-            for (int j = 0; j < SizeY; j++)
-            {   
-                mapTiles[i, j].DrawTile(r, g, b);
-            }
+        return y + SizeY * x;
+    }
+
+    public void CreateGameObjects(Transform prefab, Transform parent)
+    {
+        Transform go;
+        TileInfo ti;
+
+        foreach (var item in mTiles)
+        {
+            go = MonoBehaviour.Instantiate(prefab, new Vector2(item.X, item.Y), Quaternion.identity, parent);
+            ti = go.gameObject.GetComponent<TileInfo>();
+            ti.SetTileInfo(item);
+            ti.DrawTile(true, true, true);
+            tInfos.Add(ti);
+        }
+    }
+
+    public void DrawTilesAll(bool r, bool g, bool b)
+    {
+        foreach (var item in tInfos)
+        {
+            item.DrawTile(r,g,b);
+        }
     }
 }
 

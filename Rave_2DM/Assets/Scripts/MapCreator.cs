@@ -7,10 +7,9 @@ public class MapCreator : MonoBehaviour
 {
     [SerializeField] private  int sizeX, sizeY;
     [SerializeField] private int mapCreatorSeed;
-    [SerializeField] private SpriteRenderer spritePrefab;
-    [SerializeField] private Sprite[] tileSprites;
-    private Map map;
-    private bool isCreated;
+    [SerializeField] private Transform spritePrefab;
+    //[SerializeField] private Sprite[] tileSprites;
+    [SerializeField] private Map map;
     private Transform mapCenter, mapLeft, mapRight;
     private readonly string mapName = "MapTiles";
 
@@ -21,7 +20,6 @@ public class MapCreator : MonoBehaviour
 
     private void Start()
     {
-        isCreated = false;
         CreateMap(sizeX, sizeY, mapCreatorSeed);
     }
 
@@ -35,47 +33,42 @@ public class MapCreator : MonoBehaviour
         if (CheckSize())
         {
             System.DateTime time =System.DateTime.Now;
-            if (isCreated)
+            if (map != null)
                 DeleteMap();    
-            CreateMapTileObject();
-            map = new Map(x, y, countR5)
-            {
-                spritePrefab = spritePrefab
-            };
-            map.FillMapData(seed, mapCenter, tempCurve);
-            map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
-            //CopyMap();
+
+            CreateMapTileObject(out mapCenter);
+            CreateMapTileObject(out mapLeft);
+            CreateMapTileObject(out mapRight);
+
+            mapCenter.position = new Vector2 (0.5f, 0);
+            mapLeft.position = new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y);
+            mapRight.position = new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y);
+
+            map = new Map(x, y, countR5, seed, tempCurve);
+            map.CreateGameObjects(spritePrefab, mapCenter);
             CenterMap();
-            isCreated = true;
             Debug.Log($"Map create time = {System.DateTime.Now - time}");
         }
         else
             Debug.Log("Wrong sizeX, sizeY");
     }
 
-    private void CreateMapTileObject()
-    {
-        mapCenter = new GameObject().transform;
-        mapCenter.SetParent(transform);
-        mapCenter.name = mapName;
+    private void CreateMapTileObject(out Transform mapTransform)
+    {       
+        mapTransform = new GameObject().transform;
+        mapTransform.SetParent(transform);
+        mapTransform.name = mapName;
     }
 
     private void DeleteMap()
     {
-        if (isCreated)
+        if (map!=null)
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
                 Destroy(transform.GetChild(i).gameObject);
-            isCreated = false;
+            map = null;
         }
         transform.position = new Vector3(0, 0, 0);
-    }
-
-    private void CopyMap()
-    {
-        mapRight = Instantiate(mapCenter, new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y), Quaternion.identity);
-        mapLeft = Instantiate(mapCenter, new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y), Quaternion.identity, transform);
-        mapRight.SetParent(transform);
     }
 
     private void Update()
@@ -84,6 +77,8 @@ public class MapCreator : MonoBehaviour
         {
             CreateMap(sizeX, sizeY, mapCreatorSeed);
             mapCreatorSeed++;
+            rgbChanged = false;
+            RGB.Item1 = RGB.Item2 = RGB.Item3 = true;
         }
         if (Input.GetKeyDown(KeyCode.D))
             DeleteMap();
@@ -107,7 +102,7 @@ public class MapCreator : MonoBehaviour
 
         if (rgbChanged)
         {
-            map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
+            map.DrawTilesAll(RGB.Item1, RGB.Item2, RGB.Item3);
             rgbChanged = false;
         }
     }

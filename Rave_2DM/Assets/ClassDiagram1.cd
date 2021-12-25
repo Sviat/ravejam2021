@@ -1,207 +1,165 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Buildings">
-    <Position X="17.25" Y="5.5" Width="1.5" />
+    <Position X="17.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAAAAAAAAAAAAAIAAAADAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Buildings.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CameraMove" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="23.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\CameraMove.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="Characters" Collapsed="true">
-    <Position X="15" Y="0.5" Width="1.5" />
+    <Position X="19.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQBAEAAAAAABgAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Robot" Collapsed="true">
-    <Position X="15" Y="1.75" Width="1.5" />
+    <Position X="17" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAACAAAAA=</HashCode>
       <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Prisioner" Collapsed="true">
-    <Position X="17.25" Y="1.75" Width="1.5" />
+    <Position X="19.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAYAABAAAQAAAAAAAAABAAAABAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Animal" Collapsed="true">
-    <Position X="12.75" Y="1.75" Width="1.5" />
+    <Position X="14.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Characters.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GoodStorage" Collapsed="true">
-    <Position X="12.5" Y="4.75" Width="1.5" />
+    <Position X="15.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAACAAAAAADAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\GoodStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Map" Collapsed="true">
-    <Position X="19.75" Y="1.5" Width="1.5" />
+  <Class Name="MapCreator">
+    <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAABACIAAAAAAAoAABQAAEACAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Map.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MapCreator" Collapsed="true">
-    <Position X="23.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAMABABCAAAAAABCAAAAAQAoAAAEAAEAGAEUAAEAA=</HashCode>
+      <HashCode>AAQAsAIABCAAAAIAACAAAAAIABAAAEAQEAGIEEAAEAA=</HashCode>
       <FileName>Assets\Scripts\MapCreator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TileInfo" Collapsed="true">
-    <Position X="15.5" Y="4.75" Width="1.5" />
+  <Class Name="TileInfo">
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAECAQAAAAAAACAAAAAAAAAwAAAAACAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAECARAAIAAAACAAAAACAAAwAAEACCAAAQAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\TileInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Tiles" Collapsed="true">
-    <Position X="15.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAQAAAAAAAAQAAQAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Tiles.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="TradeGoods" Collapsed="true">
-    <Position X="12.5" Y="3.5" Width="1.5" />
+    <Position X="15.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAQAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BuildingFactory" Collapsed="true">
-    <Position X="34.75" Y="8.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ExploitBuildings">
-    <Position X="13.75" Y="7.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FactoryBuildings">
-    <Position X="15.5" Y="7.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="InfrastructureBuildings">
-    <Position X="17.25" Y="7.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="CivilBuildings">
     <Position X="20.75" Y="7.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Buildings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="NativeBuildings">
     <Position X="19" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Buildings.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="HeightRGB" Collapsed="true">
-    <Position X="19.75" Y="2.75" Width="1.5" />
+  <Class Name="CameraController" Collapsed="true">
+    <Position X="19.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAYAQAAAIAEAAACAAIAAAACAEAAQA=</HashCode>
+      <HashCode>AAQAAAACEiAAAAIAAAAAAEgAAAAAAQAAEAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tile">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAAAAAAAAAAAYAACAAAABgCAEAYQA=</HashCode>
+      <FileName>Assets\Scripts\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TouchController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAAAAgAAAAAAgBAIAAAAAAAAACBAgAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TouchController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Map">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAACBAALQAAAABAIEEBIAAAAAACBAAAQQ=</HashCode>
+      <FileName>Assets\Scripts\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="HeightRGB" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAEAAAAAAAYBQAAAIAEAAAAAAAAAAACAEAAyA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="BuildingPlan" Collapsed="true">
-    <Position X="34.75" Y="9.5" Width="1.5" />
+    <Position X="20.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Buildings.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Enum Name="HeightValues" Collapsed="true">
-    <Position X="19.75" Y="4" Width="1.5" />
+    <Position X="12.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAQAIAIAAACAACAAgAAAAAQAABAAAAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TempValues" Collapsed="true">
-    <Position X="21.5" Y="4" Width="1.5" />
+    <Position X="12.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAABAAAAAARAIAAAAAAAEBDAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="WaterValues" Collapsed="true">
-    <Position X="21.5" Y="4.75" Width="1.5" />
+    <Position X="12.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAgAAABQAAACAAIAAEAAACAAA=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAgAAAAQAAACAAIAAEAAACIAA=</HashCode>
       <FileName>Assets\Scripts\HeightRGB.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TradeGoodsTypes" Collapsed="true">
-    <Position X="19.75" Y="4.75" Width="1.5" />
+    <Position X="14.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAhCAhAAEAIAGACAABAQIIAABIAAAgAIAAAAAABA=</HashCode>
       <FileName>Assets\Scripts\TradeGoods.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="ExploiBuildingTypes" Collapsed="true">
-    <Position X="36.5" Y="10.75" Width="1.5" />
+  <Enum Name="BuildingTypes" Collapsed="true">
+    <Position X="20.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAAAQAAAQAAiAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAEABgAQBEAjAAAAAEAAACgECAAACAMAEABEQABAg=</HashCode>
       <FileName>Assets\Scripts\Buildings.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="FactoryBuildingsTypes" Collapsed="true">
-    <Position X="38.25" Y="10.75" Width="1.5" />
+  <Enum Name="BuildingSlot" Collapsed="true">
+    <Position X="20.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAEAAAAAAAAAYAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="InfrastructureBuildingsTypes" Collapsed="true">
-    <Position X="34.75" Y="11.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAEICAAAAAAACAAAAAAAAAAAAAAAIAAAAABgA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="CivilBuildingsTypes" Collapsed="true">
-    <Position X="34.75" Y="10.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAACAAAAQAAAIAAAAAABAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="NativeBuildingsTypes" Collapsed="true">
-    <Position X="36.5" Y="11.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAgAAAAAAAAAgABAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Buildings.cs</FileName>
+      <HashCode>AABAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgaAAAA=</HashCode>
+      <FileName>Assets\Scripts\TileInfo.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

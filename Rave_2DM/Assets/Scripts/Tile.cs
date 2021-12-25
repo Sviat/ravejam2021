@@ -1,13 +1,50 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-
-[System.Serializable] public class Tile
+[Serializable]
+public class Tile
 {
-    [SerializeField] public HeightRGB height;
-    private SpriteRenderer tileGameObject;
+    [SerializeField] private HeightRGB height;
+    [SerializeField] private int x, y;
 
+    public int X
+    {
+        get
+        {
+            return x;
+        }
+    }
+    public int Y
+    {
+        get
+        {
+            return y;
+        }
+    }
+    public void SetXY(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
+    public Tile()
+    {
+    }
+    public Tile(HeightRGB _h)
+    {
+        height = _h;
+    }
+    public Tile(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
+    public Tile(int _x, int _y, HeightRGB _h)
+    {
+        x = _x;
+        y = _y;
+        height = _h;
+    }
 
     public void SetHeight (int heightR, int heightG, int heightB)
     {
@@ -17,22 +54,37 @@ using UnityEngine;
     {
         this.height = height;
     }
+    //public HeightRGB GetHeight() => new HeightRGB(height);
 
-    public void SetSpriteToTile(SpriteRenderer sprite, int x, int y, Transform parent)
+    public void AddHeight(HeightRGB addValue)
     {
-        tileGameObject = MonoBehaviour.Instantiate(sprite, new Vector2(x, y), Quaternion.identity, parent);
-        tileGameObject.GetComponent<TileInfo>().SetTileInfo(this);
+        height += addValue;
     }
 
-    public void DrawTile(bool r, bool g, bool b)
+    public HeightRGB Height
     {
-        int maxHeight = (int) HeightRGB.MAX_HEIGHT;
-        float R, G, B;
-        R = G = B = 0;
-        if (r) R = (float)height.R / (float)maxHeight;
-        if (g) G = (float)height.G / (float)maxHeight;
-        if (b) B = (float)height.B / (float)maxHeight;
-        tileGameObject.color = new Color (R, G, B);
+        get
+        {
+            return height;
+        }
+    }
+
+    public HeightValues R
+    {
+        get { return height.R; }
+        set { height.R = value; }
+    }
+
+    public TempValues G
+    {
+        get { return height.G; }
+        set { height.G = value; }
+    }
+
+    public WaterValues B
+    {
+        get { return height.B; }
+        set { height.B = value; }
     }
 
 }

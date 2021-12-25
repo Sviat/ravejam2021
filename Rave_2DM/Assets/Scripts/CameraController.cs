@@ -9,7 +9,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float zoomSpeed;
 
-    private Camera camera;
+    private Camera camera = new Camera();
+
     private void Start()
     {
         newPosition = transform.position;
@@ -26,7 +27,7 @@ public class CameraController : MonoBehaviour
     }
     private void CheckPosition()
     {
-        if (Math.Abs(transform.position.x) > Map.sizeX)
+        if (Math.Abs(transform.position.x) > Map.SizeX)
         {
             float newX = CountNewPosition(transform.position.x);
             newPosition.x = CountNewPosition(newPosition.x);
@@ -36,7 +37,7 @@ public class CameraController : MonoBehaviour
     private float CountNewPosition(float positionX)
     {
         float sign = Math.Sign(positionX);
-        return sign * (Math.Abs(positionX) - Map.sizeX);
+        return sign * (Math.Abs(positionX) - Map.SizeX);
     }
 
     public void CameraMove(Vector3 deltaPosition)
@@ -47,7 +48,7 @@ public class CameraController : MonoBehaviour
     public void CameraZoom(float deltaY)
     {
         float newSize = camera.orthographicSize - deltaY * zoomSpeed;
-        if (newSize > 2 && newSize <= Map.sizeX / 2.0f)
+        if (newSize > 2 && newSize <= Map.SizeX / 2.0f)
             camera.orthographicSize = newSize;    
     }
 

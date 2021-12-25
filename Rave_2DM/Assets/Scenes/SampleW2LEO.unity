@@ -754,61 +754,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc71b731ba283b44a8f23790cbba4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 64
-  sizeY: 33
+  sizeX: 0
+  sizeY: 0
   mapCreatorSeed: 0
-  spritePrefab: {fileID: 7622029972270873640, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
-  tileSprites:
-  - {fileID: 6149973742355520143, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -3410791786889293155, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 4959204047350417981, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -8291252323801088944, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 1813533294566290432, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 6056368561050020702, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -8788423994518891385, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -3304766431399659631, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 2065472251957412740, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -1787380960028237253, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -4330774806643093922, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -2725255658315410117, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -3824982656383914369, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 5398332093921967667, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 4692571688198065327, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 2841424008411121574, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: 21300000, guid: 757c7670d88e17e4ba0e0c3d6d05284b, type: 3}
-  - {fileID: 21300000, guid: 416a8ae1c3985e84eb4997063dcd3800, type: 3}
-  - {fileID: 21300000, guid: bf3595e850817eb45aa23182b364ec4f, type: 3}
-  countR5: 2
+  spritePrefab: {fileID: 0}
+  tileSprites: []
+  countR5: 0
   tempCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

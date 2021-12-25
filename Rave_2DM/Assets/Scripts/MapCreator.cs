@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private int sizeX, sizeY;
+    [SerializeField] private  int sizeX, sizeY;
     [SerializeField] private int mapCreatorSeed;
     [SerializeField] private SpriteRenderer spritePrefab;
     [SerializeField] private Sprite[] tileSprites;
     private Map map;
     private bool isCreated;
     private Transform mapCenter, mapLeft, mapRight;
-    private string mapName = "MapTiles";
+    private readonly string mapName = "MapTiles";
 
     [SerializeField] private int countR5;
     [SerializeField] private AnimationCurve tempCurve;
     private (bool, bool, bool) RGB = (true, true, true);
     private bool rgbChanged = false;
+
     private void Start()
     {
         isCreated = false;
@@ -37,8 +38,10 @@ public class MapCreator : MonoBehaviour
             if (isCreated)
                 DeleteMap();    
             CreateMapTileObject();
-            map = new Map(x, y, countR5);
-            map.spritePrefab = spritePrefab;
+            map = new Map(x, y, countR5)
+            {
+                spritePrefab = spritePrefab
+            };
             map.FillMapData(seed, mapCenter, tempCurve);
             map.DrawTiles(RGB.Item1, RGB.Item2, RGB.Item3);
             //CopyMap();

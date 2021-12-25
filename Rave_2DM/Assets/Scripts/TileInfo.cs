@@ -9,10 +9,14 @@ public enum BuildingSlot
 
 public class TileInfo : MonoBehaviour
 {
-
     [SerializeField] private Tile tileSetInMap;
-    private Buildings BuiltGameObject = null;
+    [SerializeField] private SpriteRenderer LandscapeModificator;
+    [SerializeField] private SpriteRenderer Resources;
+    [SerializeField] private SpriteRenderer Building;
+
     [SerializeField] private BuildingSlot buildingSlot;
+    private Buildings BuiltGameObject = null;
+    
     private bool canBuild;
 
     private TradeGoodsTypes good = TradeGoodsTypes.Null;

@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable] public class Tile
 {
     [SerializeField] public HeightRGB height;
-    public SpriteRenderer tileGameObject;
+    private SpriteRenderer tileGameObject;
 
 
     public void SetHeight (int heightR, int heightG, int heightB)
@@ -26,7 +26,7 @@ using UnityEngine;
 
     public void DrawTile(bool r, bool g, bool b)
     {
-        int maxHeight = HeightRGB.MAX_HEIGHT;
+        int maxHeight = (int) HeightRGB.MAX_HEIGHT;
         float R, G, B;
         R = G = B = 0;
         if (r) R = (float)height.R / (float)maxHeight;

@@ -8,9 +8,9 @@ public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL
 
 [Serializable] public struct HeightRGB 
 {
-    public static readonly int MAX_HEIGHT = 8;
-    public static readonly int DEFAULT_HEIGHT = 5;
-    public static readonly int MAX_TEMP = 6;
+    public static readonly HeightValues MAX_HEIGHT = HeightValues.R8_EVEREST;
+    public static readonly HeightValues DEFAULT_HEIGHT = HeightValues.R5_HILLS;
+    public static readonly TempValues DEFAULT_TEMP = TempValues.G4_BEST;
 
     public HeightValues R;
     public TempValues G;
@@ -18,9 +18,9 @@ public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL
 
     public HeightRGB(int R, int G, int B)
     {
-        this.R = R <= MAX_HEIGHT ? (HeightValues)R : HeightValues.R8_EVEREST;
-        this.G = G <= MAX_HEIGHT ? (TempValues)G : TempValues.G8_HELL;
-        this.B = B <= MAX_HEIGHT ? (WaterValues)B : WaterValues.B8_DESERT;
+        this.R = R <= (int)MAX_HEIGHT ? (HeightValues)R : HeightValues.R8_EVEREST;
+        this.G = G <= (int)MAX_HEIGHT ? (TempValues)G : TempValues.G8_HELL;
+        this.B = B <= (int)MAX_HEIGHT ? (WaterValues)B : WaterValues.B8_DESERT;
     }
 
     private HeightRGB Normalized()
@@ -42,7 +42,8 @@ public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL
         tmpR = (int) a.R + (int) b.R;
         tmpG = (int) a.G + (int) b.G;
         tmpB = (int) a.B + (int) b.B;
-        return new HeightRGB(tmpR <= MAX_HEIGHT ? tmpR : MAX_HEIGHT, tmpG <= MAX_HEIGHT ? tmpG : MAX_HEIGHT, tmpB <= MAX_HEIGHT ? tmpB : MAX_HEIGHT);
+        return new HeightRGB(tmpR <= (int)MAX_HEIGHT ? tmpR : (int)MAX_HEIGHT, tmpG <= (int)MAX_HEIGHT ? tmpG : (int)MAX_HEIGHT, 
+            tmpB <= (int)MAX_HEIGHT ? tmpB : (int)MAX_HEIGHT);
     }
 
     public static HeightRGB operator /(HeightRGB a, HeightRGB b)

@@ -1,6 +1,6 @@
 using System;
 
-public enum HeightValues { R0_DEEP_OCEAN, R1, R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
+public enum HeightValues { R0_DEEP_OCEAN, R1,  R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
 public enum TempValues { G0_DETH_TEMP, G1, G2_COLD_LIFE_LOW, G3_COLD, G4_BEST, G5_WARM, G6_HEAT, G7, G8_HELL }
 public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CLIMAT, B5_DRY_CLIMATE, B6_STEPPE, B7, B8_DESERT }
 
@@ -27,6 +27,12 @@ public enum WaterValues { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL
         this.R = R < (int)MAX_HEIGHT ? (HeightValues)R : HeightValues.R8_EVEREST;
         this.G = G < (int)MAX_HEIGHT ? (TempValues)G : TempValues.G8_HELL;
         this.B = B < (int)MAX_HEIGHT ? (WaterValues)B : WaterValues.B8_DESERT;
+    }
+    public HeightRGB(HeightValues R, TempValues G, WaterValues B)
+    {
+        this.R = R;
+        this.G = G;
+        this.B = B;
     }
 
     private HeightRGB Normalized()

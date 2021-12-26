@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable] public class Map
+[Serializable]
+public class Map
 {
     public static int SizeX { get; private set; }
     public static int SizeY { get; private set; }
     [SerializeField] private List<Tile> mTiles;
-    private List<TileInfo> tInfos;
+    [SerializeField] private List<TileInfo> tInfos;
 
     List<HeightRGB> baseHeigthList = new List<HeightRGB>();
 
@@ -19,7 +20,7 @@ using System;
 
     private Map()
     {
-       
+
     }
 
     public Map(int x, int y, int countR5, int seed, AnimationCurve tempCurve)
@@ -32,9 +33,9 @@ using System;
         FillMapData(seed, tempCurve);
     }
 
-    public List<(int,int)> FindTileByRGB(HeightRGB height)
+    public List<(int, int)> FindTileByRGB(HeightRGB height)
     {
-        List<(int,int)> indexXY = new List<(int,int)>();
+        List<(int, int)> indexXY = new List<(int, int)>();
         foreach (var e in mTiles)
         {
             if (e.Height == height)
@@ -92,7 +93,7 @@ using System;
                 R = mTiles[mIndex].R;
                 G = mTiles[mIndex].G;
                 B = RG_to_B(R, G, randomW);
-                mTiles[mIndex].B = B;
+                mTiles[mIndex].SetHeight(new HeightRGB(R, G, B));
             }
     }
 
@@ -137,7 +138,7 @@ using System;
         int G = (int)temp;
         int B = (int)mTiles[ListIndex(x, y)].B;
 
-       mTiles[ListIndex(x, y)].SetHeight(R, G, B);
+        mTiles[ListIndex(x, y)].SetHeight(R, G, B);
     }
 
     private void FillHeightTempValues(System.Random randomRGB, AnimationCurve tempCurve)
@@ -183,7 +184,7 @@ using System;
         return y + SizeY * x;
     }
 
-    public void CreateGameObjects(Transform prefab, Transform parent)
+    public void CreateGameObjects(Transform prefab, Transform parent, bool isCopy)
     {
         Transform go;
         TileInfo ti;
@@ -192,8 +193,8 @@ using System;
         {
             go = MonoBehaviour.Instantiate(prefab, new Vector2(item.X, item.Y), Quaternion.identity, parent);
             ti = go.gameObject.GetComponent<TileInfo>();
-            ti.SetTileInfo(item);
-            ti.DrawTile(true, true, true);
+            ti.SetTileInfo(item, isCopy);
+            //ti.DrawTile(true, true, true);
             tInfos.Add(ti);
         }
     }
@@ -202,8 +203,42 @@ using System;
     {
         foreach (var item in tInfos)
         {
-            item.DrawTile(r,g,b);
+            item.DrawTile(r, g, b);
+        }
+    }
+
+    public void SetSprites(Dictionary<HeightValues, Sprite> groundTiles)
+    {
+        // Set sprites by Height R
+        foreach (var item in mTiles)
+        {
+            HeightValues R = item.R;
+            if (groundTiles.ContainsKey(R))
+            {
+                item.tileSprite = groundTiles[R];
+            }
+        }
+    }
+    public void SetSprites(Dictionary<TempValues, Sprite> landTempTiles)
+    {
+        //Set Sprite by Temp
+        foreach (var item in mTiles)
+        {
+            TempValues G = item.G;
+            if ((landTempTiles.ContainsKey(G) && item.R == HeightValues.R4_PLAIN))
+                item.tileSprite = landTempTiles[G];
+            if (item.G > TempValues.G6_HEAT && item.R< HeightValues.R6_MOUNTAINS)
+                item.tileSprite = landTempTiles[TempValues.G6_HEAT];
+        }
+    }
+    public void SetSpritesToObjects()
+    {
+        foreach (var item in tInfos)
+        {
+            if (item.GetTileSprite())
+            {
+                item.SetSpriteToTile();
+            }
         }
     }
 }
-

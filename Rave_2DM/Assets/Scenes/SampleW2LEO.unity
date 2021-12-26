@@ -364,7 +364,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.044642217, g: 0.09698785, b: 0.1792453, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 2.4812858
+  m_AspectRatio: 2.0354302
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,13 +1503,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc71b731ba283b44a8f23790cbba4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 4
-  sizeY: 3
+  sizeX: 16
+  sizeY: 15
   mapCreatorSeed: 0
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
+  groundSprites:
+  - {fileID: 2928812133171043401, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: -3824982656383914369, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 1605671346517006972, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 4959204047350417981, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 8979777560067110718, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: -5533787283750245501, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  landTempSprites:
+  - {fileID: 5391608408022602112, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 4076540750078684215, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   map:
     mTiles: []
-  countR5: 0
+    tInfos: []
+  countR5: 1
   tempCurve:
     serializedVersion: 2
     m_Curve:
@@ -2479,7 +2490,7 @@ Canvas:
   m_GameObject: {fileID: 997545636}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 142831156}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -3069,7 +3080,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217872867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.24, y: 3.88, z: -22.430412}
+  m_LocalPosition: {x: -1.01, y: 3.88, z: -22.430412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 483228811}

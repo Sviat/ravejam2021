@@ -8,6 +8,15 @@ public class Tile
     [SerializeField] private HeightRGB height;
     [SerializeField] private int x, y;
 
+    public Sprite tileSprite;
+    [SerializeField] private BuildingSlot buildingSlot;
+    private Buildings BuiltGameObject = null;
+    private bool canBuild;
+    private TradeGoodsTypes good = TradeGoodsTypes.Null;
+    [Range(0, 1)]
+    private float remainingResourses = 1;
+
+
     public int X
     {
         get
@@ -15,6 +24,7 @@ public class Tile
             return x;
         }
     }
+
     public int Y
     {
         get
@@ -22,23 +32,13 @@ public class Tile
             return y;
         }
     }
-    public void SetXY(int _x, int _y)
-    {
-        x = _x;
-        y = _y;
-    }
-    public Tile()
-    {
-    }
-    public Tile(HeightRGB _h)
-    {
-        height = _h;
-    }
+
     public Tile(int _x, int _y)
     {
         x = _x;
         y = _y;
     }
+
     public Tile(int _x, int _y, HeightRGB _h)
     {
         x = _x;
@@ -50,11 +50,11 @@ public class Tile
     {
         height = new HeightRGB(heightR, heightG, heightB);
     }
+
     public void SetHeight(HeightRGB height)
     {
         this.height = height;
     }
-    //public HeightRGB GetHeight() => new HeightRGB(height);
 
     public void AddHeight(HeightRGB addValue)
     {
@@ -72,19 +72,16 @@ public class Tile
     public HeightValues R
     {
         get { return height.R; }
-        set { height.R = value; }
     }
 
     public TempValues G
     {
         get { return height.G; }
-        set { height.G = value; }
     }
 
     public WaterValues B
     {
         get { return height.B; }
-        set { height.B = value; }
     }
 
 }

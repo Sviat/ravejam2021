@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
     public void CameraZoom(float deltaY)
     {
         float newSize = camera.orthographicSize - deltaY * zoomSpeed;
-        if (newSize > 2 && newSize <= Map.SizeX / 2.0f)
+        if (newSize > 2 && newSize <= Map.SizeX / 1.0f)
             camera.orthographicSize = newSize;    
     }
 

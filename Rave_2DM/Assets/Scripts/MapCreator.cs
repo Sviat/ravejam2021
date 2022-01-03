@@ -11,12 +11,12 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private Transform spritePrefab;
 
     public Sprite mainDotSprite;
-
     // Sprites Info
     [SerializeField] private Sprite[] groundSprites; // land, ocean, sea
     Dictionary<HeightLevel, Sprite> groundTiles;
     [SerializeField] private Sprite[] landTempSprites; //
     Dictionary<TemperatureLevel, Sprite> landTempTiles;
+    Dictionary<int, Sprite> coastList;
     // End Sprites Info
 
     [SerializeField] private Map map;
@@ -37,6 +37,7 @@ public class MapCreator : MonoBehaviour
         // Add sprite values to Dictionary (refactor later)
         groundTiles = new Dictionary<HeightLevel, Sprite>();
         landTempTiles = new Dictionary<TemperatureLevel, Sprite>();
+        coastList = new Dictionary<int, Sprite>();
 
         groundTiles.Add(HeightLevel.R0_DEEP_OCEAN, groundSprites[0]);
         groundTiles.Add(HeightLevel.R2_OCEAN, groundSprites[1]);
@@ -44,11 +45,17 @@ public class MapCreator : MonoBehaviour
         groundTiles.Add(HeightLevel.R5_HILLS, groundSprites[3]);
         groundTiles.Add(HeightLevel.R6_MOUNTAINS, groundSprites[4]);
         groundTiles.Add(HeightLevel.R8_EVEREST, groundSprites[5]);
+        groundTiles.Add(HeightLevel.R3_COAST, groundSprites[6]);
 
-        landTempTiles.Add(TemperatureLevel.G5_WARM, landTempSprites[0]);
+        landTempTiles.Add(TemperatureLevel.G0_DEATH_TEMP, landTempSprites[0]);
+        landTempTiles.Add(TemperatureLevel.G2_COLD_LIFE_LOW, landTempSprites[0]);
         landTempTiles.Add(TemperatureLevel.G6_HEAT, landTempSprites[1]);
+        landTempTiles.Add(TemperatureLevel.G7, landTempSprites[2]);
+        landTempTiles.Add(TemperatureLevel.G8_HELL, landTempSprites[3]);
         // End Add sprites;
 
+        for (int i=0; i<5; i++)
+            coastList.Add(i, groundSprites[i+6]);
 
         CreateMap(sizeX, sizeY, mapCreatorSeed);
     }
@@ -72,6 +79,7 @@ public class MapCreator : MonoBehaviour
 
 
             map = new Map(x, y, R5Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst);
+            map.mainDotSprite = mainDotSprite;
             map.CreateGameObjects(spritePrefab, mapCenter, isCopy: false);
             map.CreateGameObjects(spritePrefab, mapLeft, isCopy: true);
             map.CreateGameObjects(spritePrefab, mapRight, isCopy: true);
@@ -80,8 +88,9 @@ public class MapCreator : MonoBehaviour
             mapLeft.position = new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y);
             mapRight.position = new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y);
 
-            map.SetSprites(groundTiles);
+            map.SetSprites(groundTiles, coastList);
             map.SetSprites(landTempTiles);
+            map.RotateCoast();
 
             map.SetSpritesToObjects();
 

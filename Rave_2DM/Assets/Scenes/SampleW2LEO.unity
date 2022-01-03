@@ -147,13 +147,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86333063}
-  m_LocalRotation: {x: 0, y: 0, z: -0.26950818, w: 0.9629981}
+  m_LocalRotation: {x: 0, y: 0, z: -0.17192912, w: 0.9851093}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 333221490}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -31.27}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -19.8}
 --- !u!212 &86333065
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.7623022
+  m_AspectRatio: 0.9573925
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,27 +1515,44 @@ MonoBehaviour:
   - {fileID: 4959204047350417981, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: 8979777560067110718, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: -5533787283750245501, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 2065472251957412740, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 21300000, guid: 60f238963c5613142929193613afd538, type: 3}
+  - {fileID: 21300000, guid: 6f5f992cf5481c343932af8645348a73, type: 3}
+  - {fileID: -3617434798186626448, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 3525959743697527320, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   landTempSprites:
-  - {fileID: 5391608408022602112, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: -6108738378492305252, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 1207830001289210949, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: 4076540750078684215, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 4336505697859214686, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   map:
     mTiles: []
     tInfos: []
+    mainDotSprite: {fileID: 0}
   orthogonalRatio: 1.65
   diagonalRatio: 2.5
   rareHumidityConst: 1
-  R5Ratio: 0
+  R5Ratio: 3
   tempCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.1
+      value: 0
+      inSlope: 0
+      outSlope: 2.3893056
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.46892658
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5
@@ -1547,10 +1564,19 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
+      time: 0.9
+      value: 0
+      inSlope: -2.474483
+      outSlope: -0.0801818
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.50765014
+    - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -2
-      outSlope: -2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

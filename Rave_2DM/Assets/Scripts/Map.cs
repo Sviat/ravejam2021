@@ -8,17 +8,23 @@ public class Map
 {
     public static int SizeX { get; private set; }
     public static int SizeY { get; private set; }
+
     [SerializeField] private List<Tile> mTiles;
     [SerializeField] private List<TileInfo> tInfos;
 
-    private int DEFAULT_TEMPERATURE = (int) TemperatureLevel.G4_BEST;
+    private int MAX_DEFAULT_TEMPERATURE = (int) TemperatureLevel.G4_BEST;
 
-    List<LandscapeCode> baseHeigthList = new List<LandscapeCode>();
+    List<LandscapeCode> baseLandscapeList = new List<LandscapeCode>();
+    List<LandscapeCode> snowLandscapeList = new List<LandscapeCode>();
+
+
     private float orthogonalRatio;
     private float diagonalRatio;
     private int rareHumidityConst;
     private int R5Ratio;
 
+
+    public Sprite mainDotSprite;
 
     private Map()
     {
@@ -52,27 +58,36 @@ public class Map
     public void FillMapData(int seed, AnimationCurve tempCurve)
     {
         System.Random randomRGB = new System.Random(seed);
-        CreateHeightRGBList(R5Ratio);
+        CreateBaseLandscape(R5Ratio);
+        CreateSnowLandscape();
         InitTiles();
-        FillHeightTempValues(randomRGB, tempCurve);
+        FillLandscapeAdnTemperature(randomRGB, tempCurve);
         FillWaterValues(seed);
     }
 
-    private void CreateHeightRGBList(int countR5)
+    private void CreateSnowLandscape()
     {
-        baseHeigthList.Clear();
+        snowLandscapeList.Clear();
+
+        LandscapeCode hR0 = new LandscapeCode((int)HeightLevel.R0_DEEP_OCEAN, 0, 0);
+        LandscapeCode hR2 = new LandscapeCode((int)HeightLevel.R2_OCEAN, 0, 0);
+
+        snowLandscapeList.Add(hR0);
+        snowLandscapeList.Add(hR2);
+    }
+
+    private void CreateBaseLandscape(int countR5)
+    {
+        baseLandscapeList.Clear();
 
         LandscapeCode hR0 = new LandscapeCode((int)HeightLevel.R0_DEEP_OCEAN, 0, 0);
         LandscapeCode hR4 = new LandscapeCode((int)HeightLevel.R4_PLAIN, 0, 0);
         LandscapeCode hR5 = new LandscapeCode((int)HeightLevel.R5_HILLS, 0, 0);
-        LandscapeCode hR6 = new LandscapeCode((int)HeightLevel.R6_MOUNTAINS, 0, 0);
 
-        baseHeigthList.Add(hR0);
-        baseHeigthList.Add(hR4);
-        //baseHeigthList.Add(hR6);
-
+        baseLandscapeList.Add(hR0);
+        baseLandscapeList.Add(hR4);
         for (int i = 0; i < countR5; i++)
-            baseHeigthList.Add(hR5);
+            baseLandscapeList.Add(hR5);
     }
 
     private void InitTiles()
@@ -136,7 +151,7 @@ public class Map
     private void FillTemp(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
     {
         float temp;
-        temp = tempCurve.Evaluate((float)y / SizeY) * (DEFAULT_TEMPERATURE + tempAddRatio);
+        temp = tempCurve.Evaluate((float)y / SizeY) * (MAX_DEFAULT_TEMPERATURE + tempAddRatio);
         temp = Mathf.Round(temp);
 
         int R = (int)mTiles[ListIndex(x, y)].R;
@@ -146,15 +161,19 @@ public class Map
         mTiles[ListIndex(x, y)].SetHeight(R, G, B);
     }
 
-    private void FillHeightTempValues(System.Random randomRGB, AnimationCurve tempCurve)
+    private void FillLandscapeAdnTemperature(System.Random randomRGB, AnimationCurve tempCurve)
     {
+        LandscapeCode h;
         for (int i = 1; i < SizeX; i += 2)
             for (int j = 1; j < SizeY; j += 2)
             {
-                LandscapeCode h = baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)];
+                if (j < 3 || j > SizeY - 3)
+                    h = snowLandscapeList[randomRGB.Next(0, snowLandscapeList.Count)];
+                else
+                    h = baseLandscapeList[randomRGB.Next(0, baseLandscapeList.Count)];
 
                 mTiles[ListIndex(i, j)].SetHeight(h);
-                FillTemp(tempCurve, i, j, randomRGB.Next(0, 2));
+                FillTemp(tempCurve, i, j, randomRGB.Next(-1, 2));
                 FillAroundHeight(i, j);
             }
     }
@@ -178,9 +197,8 @@ public class Map
                         ratio = orthogonalRatio;
                     else
                         ratio = diagonalRatio;
-                   
+
                     mTiles[ListIndex(i, j)].AddHeight(mTiles[ListIndex(x, y)].Height / ratio);
-                    
                 }
             }
     }
@@ -201,6 +219,10 @@ public class Map
             ti = go.gameObject.GetComponent<TileInfo>();
             ti.SetTileInfo(item, isCopy);
             //ti.DrawTile(true, true, true);
+
+            if (item.X % 2 != 0 && item.Y % 2 != 0)
+                ti.Building.GetComponent<SpriteRenderer>().sprite = mainDotSprite;
+
             tInfos.Add(ti);
         }
     }
@@ -213,7 +235,7 @@ public class Map
         }
     }
 
-    public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles)
+    public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles, Dictionary<int, Sprite> coastList)
     {
         // Set sprites by Height R
         foreach (var item in mTiles)
@@ -223,18 +245,57 @@ public class Map
             {
                 item.tileSprite = groundTiles[R];
             }
+
+            if (item.R == HeightLevel.R3_COAST)
+            {
+                int countWater = CountOrtoTiles(item.X, item.Y);
+                item.tileSprite = coastList[countWater];
+                RotateCoast();
+            }
         }
+
+
     }
+
+    public  void RotateCoast()
+    {
+        // flip x,y 
+        // x - left, right
+        // y - up, down
+    }
+
+    private int CountOrtoTiles(int x, int y)
+    {
+        int res = 0;
+        int xLeft, xRight, yUp, yDown;
+
+        xLeft = x - 1;
+        xRight = x + 1;
+        if (xLeft < 0)
+            xLeft = SizeX - 1;
+        if (xRight > SizeX - 1)
+            xRight = 0;
+
+        if (mTiles[ListIndex(xLeft, y)].R < HeightLevel.R3_COAST)
+            res++;
+        if (mTiles[ListIndex(xRight, y)].R < HeightLevel.R3_COAST)
+            res++;
+        if (mTiles[ListIndex(x, y-1)].R < HeightLevel.R3_COAST)
+            res++;
+        if (mTiles[ListIndex(x, y+1)].R < HeightLevel.R3_COAST)
+            res++;
+
+        return res;
+    }
+
     public void SetSprites(Dictionary<TemperatureLevel, Sprite> landTempTiles)
     {
         //Set Sprite by Temp
         foreach (var item in mTiles)
         {
             TemperatureLevel G = item.G;
-            if ((landTempTiles.ContainsKey(G) && item.R == HeightLevel.R4_PLAIN))
-                item.tileSprite = landTempTiles[G];
-            if (item.G > TemperatureLevel.G6_HEAT && item.R< HeightLevel.R6_MOUNTAINS)
-                item.tileSprite = landTempTiles[TemperatureLevel.G6_HEAT];
+            if (landTempTiles.ContainsKey(G))
+                item.landscapeModificator = landTempTiles[G];
         }
     }
     public void SetSpritesToObjects()

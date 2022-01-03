@@ -5,10 +5,14 @@ using System;
 [Serializable]
 public class Tile
 {
-    [SerializeField] private LandscapeCode height;
+    [SerializeField] private LandscapeCode landCode;
     [SerializeField] private int x, y;
 
     public Sprite tileSprite;
+    public Sprite landscapeModificator;
+    public Sprite resourceSprite;
+   
+
     [SerializeField] private BuildingSlot buildingSlot;
     private Buildings BuiltGameObject = null;
     private bool canBuild;
@@ -43,45 +47,45 @@ public class Tile
     {
         x = _x;
         y = _y;
-        height = _h;
+        landCode = _h;
     }
 
     public void SetHeight (int heightR, int heightG, int heightB)
     {
-        height = new LandscapeCode(heightR, heightG, heightB);
+        landCode = new LandscapeCode(heightR, heightG, heightB);
     }
 
     public void SetHeight(LandscapeCode height)
     {
-        this.height = height;
+        this.landCode = height;
     }
 
     public void AddHeight(LandscapeCode addValue)
     {
-        height += addValue;
+        landCode += addValue;
     }
 
     public LandscapeCode Height
     {
         get
         {
-            return height;
+            return landCode;
         }
     }
 
     public HeightLevel R
     {
-        get { return height.R; }
+        get { return landCode.R; }
     }
 
     public TemperatureLevel G
     {
-        get { return height.G; }
+        get { return landCode.G; }
     }
 
     public HumidityLevel B
     {
-        get { return height.B; }
+        get { return landCode.B; }
     }
 
 }

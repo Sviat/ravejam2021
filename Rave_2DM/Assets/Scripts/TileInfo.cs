@@ -12,22 +12,24 @@ public class TileInfo : MonoBehaviour
 {
     [SerializeField] private Tile tileSetInMap;
     private SpriteRenderer tileSpriteRenderer;
-    private SpriteRenderer LandscapeModificator;
-    private SpriteRenderer Resources;
-    private SpriteRenderer Building;
+    [SerializeField] public Transform LandscapeModificator;
+    [SerializeField] public Transform Resources;
+    [SerializeField] public Transform Building;
 
     private bool isCopy;
 
     public bool GetTileSprite()
     {
+        if (tileSpriteRenderer == null)
+            tileSpriteRenderer = GetComponent<SpriteRenderer>();
         if (tileSetInMap.tileSprite != null)
             return true;
         return false;
     }
+
     public void SetTileInfo(Tile tile, bool _isCopy)
     {
         tileSetInMap = tile;
-        tileSpriteRenderer = GetComponent<SpriteRenderer>();
         isCopy = _isCopy;
     }
 
@@ -38,7 +40,8 @@ public class TileInfo : MonoBehaviour
 
     public void SetSpriteToTile()
     {
-        tileSpriteRenderer.sprite = tileSetInMap.tileSprite;   
+        tileSpriteRenderer.sprite = tileSetInMap.tileSprite;
+        LandscapeModificator.GetComponent<SpriteRenderer>().sprite = tileSetInMap.landscapeModificator;   
     }
 
     public void DrawTile(bool r, bool g, bool b)

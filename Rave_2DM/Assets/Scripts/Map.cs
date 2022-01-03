@@ -11,29 +11,34 @@ public class Map
     [SerializeField] private List<Tile> mTiles;
     [SerializeField] private List<TileInfo> tInfos;
 
-    List<HeightRGB> baseHeigthList = new List<HeightRGB>();
+    private int DEFAULT_TEMPERATURE = (int) TemperatureLevel.G4_BEST;
 
-    private float lineRatio = 1.65f;
-    private float diagonalRatio = 2.5f;
-    private int RareHumidityConst = 1;
-    private int countR5;
+    List<LandscapeCode> baseHeigthList = new List<LandscapeCode>();
+    private float orthogonalRatio;
+    private float diagonalRatio;
+    private int rareHumidityConst;
+    private int R5Ratio;
+
 
     private Map()
     {
 
     }
 
-    public Map(int x, int y, int countR5, int seed, AnimationCurve tempCurve)
+    public Map(int x, int y, int R5Ratio, int seed, AnimationCurve tempCurve, float orthogonalRatio, float diagonalRatio, int rareHumidityConst)
     {
         SizeX = x;
         SizeY = y;
         mTiles = new List<Tile>();
         tInfos = new List<TileInfo>();
-        this.countR5 = countR5;
+        this.R5Ratio = R5Ratio;
+        this.orthogonalRatio = orthogonalRatio;
+        this.diagonalRatio = diagonalRatio;
+        this.rareHumidityConst = rareHumidityConst;
         FillMapData(seed, tempCurve);
     }
 
-    public List<(int, int)> FindTileByRGB(HeightRGB height)
+    public List<(int, int)> FindTileByRGB(LandscapeCode height)
     {
         List<(int, int)> indexXY = new List<(int, int)>();
         foreach (var e in mTiles)
@@ -47,7 +52,7 @@ public class Map
     public void FillMapData(int seed, AnimationCurve tempCurve)
     {
         System.Random randomRGB = new System.Random(seed);
-        CreateHeightRGBList(countR5);
+        CreateHeightRGBList(R5Ratio);
         InitTiles();
         FillHeightTempValues(randomRGB, tempCurve);
         FillWaterValues(seed);
@@ -57,14 +62,14 @@ public class Map
     {
         baseHeigthList.Clear();
 
-        HeightRGB hR0 = new HeightRGB((int)HeightValues.R0_DEEP_OCEAN, 0, 0);
-        HeightRGB hR4 = new HeightRGB((int)HeightValues.R4_PLAIN, 0, 0);
-        HeightRGB hR5 = new HeightRGB((int)HeightValues.R5_HILLS, 0, 0);
-        HeightRGB hR6 = new HeightRGB((int)HeightValues.R6_MOUNTAINS, 0, 0);
+        LandscapeCode hR0 = new LandscapeCode((int)HeightLevel.R0_DEEP_OCEAN, 0, 0);
+        LandscapeCode hR4 = new LandscapeCode((int)HeightLevel.R4_PLAIN, 0, 0);
+        LandscapeCode hR5 = new LandscapeCode((int)HeightLevel.R5_HILLS, 0, 0);
+        LandscapeCode hR6 = new LandscapeCode((int)HeightLevel.R6_MOUNTAINS, 0, 0);
 
         baseHeigthList.Add(hR0);
         baseHeigthList.Add(hR4);
-        baseHeigthList.Add(hR6);
+        //baseHeigthList.Add(hR6);
 
         for (int i = 0; i < countR5; i++)
             baseHeigthList.Add(hR5);
@@ -82,9 +87,9 @@ public class Map
     private void FillWaterValues(int seed)
     {
         System.Random randomW = new System.Random(seed);
-        HeightValues R;
-        TempValues G;
-        WaterValues B;
+        HeightLevel R;
+        TemperatureLevel G;
+        HumidityLevel B;
 
         for (int i = 0; i < SizeX; i++)
             for (int j = 0; j < SizeY; j++)
@@ -93,24 +98,24 @@ public class Map
                 R = mTiles[mIndex].R;
                 G = mTiles[mIndex].G;
                 B = RG_to_B(R, G, randomW);
-                mTiles[mIndex].SetHeight(new HeightRGB(R, G, B));
+                mTiles[mIndex].SetHeight(new LandscapeCode(R, G, B));
             }
     }
 
-    private WaterValues RG_to_B(HeightValues R, TempValues G, System.Random random)
+    private HumidityLevel RG_to_B(HeightLevel R, TemperatureLevel G, System.Random random)
     {
 
         int min, max;
         int waterLevel;
         int currentChance;
-        WaterValues resB;
+        HumidityLevel resB;
 
         currentChance = random.Next(0, 100);
-        if (currentChance <= RareHumidityConst)
+        if (currentChance <= rareHumidityConst)
         {
             if (random.Next(0, 2) == 0)
-                resB = WaterValues.B0_OCEAN_OF_WATER;
-            else resB = WaterValues.B8_DESERT;
+                resB = HumidityLevel.B0_OCEAN_OF_WATER;
+            else resB = HumidityLevel.B8_DESERT;
 
             return resB;
         }
@@ -123,7 +128,7 @@ public class Map
             waterLevel = 2;
         if (waterLevel == 7)
             waterLevel = 6;
-        resB = (WaterValues)waterLevel;
+        resB = (HumidityLevel)waterLevel;
 
         return resB;
     }
@@ -131,7 +136,7 @@ public class Map
     private void FillTemp(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
     {
         float temp;
-        temp = tempCurve.Evaluate((float)y / SizeY) * ((int)HeightRGB.DEFAULT_TEMP + tempAddRatio);
+        temp = tempCurve.Evaluate((float)y / SizeY) * (DEFAULT_TEMPERATURE + tempAddRatio);
         temp = Mathf.Round(temp);
 
         int R = (int)mTiles[ListIndex(x, y)].R;
@@ -146,7 +151,7 @@ public class Map
         for (int i = 1; i < SizeX; i += 2)
             for (int j = 1; j < SizeY; j += 2)
             {
-                HeightRGB h = baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)];
+                LandscapeCode h = baseHeigthList[randomRGB.Next(0, baseHeigthList.Count)];
 
                 mTiles[ListIndex(i, j)].SetHeight(h);
                 FillTemp(tempCurve, i, j, randomRGB.Next(0, 2));
@@ -170,11 +175,12 @@ public class Map
                 if (!(i == x && j == y))
                 {
                     if (i == x || j == y)
-                        ratio = lineRatio;
+                        ratio = orthogonalRatio;
                     else
                         ratio = diagonalRatio;
-
+                   
                     mTiles[ListIndex(i, j)].AddHeight(mTiles[ListIndex(x, y)].Height / ratio);
+                    
                 }
             }
     }
@@ -207,28 +213,28 @@ public class Map
         }
     }
 
-    public void SetSprites(Dictionary<HeightValues, Sprite> groundTiles)
+    public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles)
     {
         // Set sprites by Height R
         foreach (var item in mTiles)
         {
-            HeightValues R = item.R;
+            HeightLevel R = item.R;
             if (groundTiles.ContainsKey(R))
             {
                 item.tileSprite = groundTiles[R];
             }
         }
     }
-    public void SetSprites(Dictionary<TempValues, Sprite> landTempTiles)
+    public void SetSprites(Dictionary<TemperatureLevel, Sprite> landTempTiles)
     {
         //Set Sprite by Temp
         foreach (var item in mTiles)
         {
-            TempValues G = item.G;
-            if ((landTempTiles.ContainsKey(G) && item.R == HeightValues.R4_PLAIN))
+            TemperatureLevel G = item.G;
+            if ((landTempTiles.ContainsKey(G) && item.R == HeightLevel.R4_PLAIN))
                 item.tileSprite = landTempTiles[G];
-            if (item.G > TempValues.G6_HEAT && item.R< HeightValues.R6_MOUNTAINS)
-                item.tileSprite = landTempTiles[TempValues.G6_HEAT];
+            if (item.G > TemperatureLevel.G6_HEAT && item.R< HeightLevel.R6_MOUNTAINS)
+                item.tileSprite = landTempTiles[TemperatureLevel.G6_HEAT];
         }
     }
     public void SetSpritesToObjects()

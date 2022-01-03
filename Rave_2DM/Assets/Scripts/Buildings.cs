@@ -6,7 +6,7 @@ public struct BuildingPlan
 {
     TradeGoods tradeGoods;
     BuildingSlot slot;
-    HeightRGB landscape; // реализовать больще - меньше. 
+    LandscapeCode landscape; // реализовать больще - меньше. 
 }
 
 

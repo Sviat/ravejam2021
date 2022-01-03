@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 2.0354302
+  m_AspectRatio: 0.7623022
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,6 +1507,7 @@ MonoBehaviour:
   sizeY: 15
   mapCreatorSeed: 0
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
+  mainDotSprite: {fileID: 2621643443015025942, guid: fd05d64586832ec49ad0dad28524e88d, type: 3}
   groundSprites:
   - {fileID: 2928812133171043401, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   - {fileID: -3824982656383914369, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
@@ -1520,7 +1521,10 @@ MonoBehaviour:
   map:
     mTiles: []
     tInfos: []
-  countR5: 1
+  orthogonalRatio: 1.65
+  diagonalRatio: 2.5
+  rareHumidityConst: 1
+  R5Ratio: 0
   tempCurve:
     serializedVersion: 2
     m_Curve:

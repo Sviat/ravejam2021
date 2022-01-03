@@ -5,7 +5,7 @@ using System;
 [Serializable]
 public class Tile
 {
-    [SerializeField] private HeightRGB height;
+    [SerializeField] private LandscapeCode height;
     [SerializeField] private int x, y;
 
     public Sprite tileSprite;
@@ -39,7 +39,7 @@ public class Tile
         y = _y;
     }
 
-    public Tile(int _x, int _y, HeightRGB _h)
+    public Tile(int _x, int _y, LandscapeCode _h)
     {
         x = _x;
         y = _y;
@@ -48,20 +48,20 @@ public class Tile
 
     public void SetHeight (int heightR, int heightG, int heightB)
     {
-        height = new HeightRGB(heightR, heightG, heightB);
+        height = new LandscapeCode(heightR, heightG, heightB);
     }
 
-    public void SetHeight(HeightRGB height)
+    public void SetHeight(LandscapeCode height)
     {
         this.height = height;
     }
 
-    public void AddHeight(HeightRGB addValue)
+    public void AddHeight(LandscapeCode addValue)
     {
         height += addValue;
     }
 
-    public HeightRGB Height
+    public LandscapeCode Height
     {
         get
         {
@@ -69,17 +69,17 @@ public class Tile
         }
     }
 
-    public HeightValues R
+    public HeightLevel R
     {
         get { return height.R; }
     }
 
-    public TempValues G
+    public TemperatureLevel G
     {
         get { return height.G; }
     }
 
-    public WaterValues B
+    public HumidityLevel B
     {
         get { return height.B; }
     }

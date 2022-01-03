@@ -43,7 +43,7 @@ public class TileInfo : MonoBehaviour
 
     public void DrawTile(bool r, bool g, bool b)
     {
-        int maxHeight = (int)HeightRGB.MAX_HEIGHT;
+        int maxHeight = 8;
         float R, G, B;
         R = G = B = 0;
         if (r) R = (float)tileSetInMap.R / (float)maxHeight;

@@ -21,7 +21,7 @@ public class Tile
     private float remainingResourses = 1;
 
 
-    public int X
+    public int X 
     {
         get
         {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum BuildingSlot 
 {
@@ -10,14 +11,17 @@ public enum BuildingSlot
 [Serializable]
 public class TileInfo : MonoBehaviour
 {
-    [SerializeField] private Tile tileSetInMap;
+    [SerializeField] public Tile tileSetInMap;
     private SpriteRenderer tileSpriteRenderer;
     [SerializeField] public Transform LandscapeModificator;
     [SerializeField] public Transform Resources;
     [SerializeField] public Transform Building;
 
+    public Transform[] coastPositions;
+
     private bool isCopy;
 
+    private SpriteRenderer srCoast;
     public bool GetTileSprite()
     {
         if (tileSpriteRenderer == null)
@@ -53,6 +57,13 @@ public class TileInfo : MonoBehaviour
         if (g) G = (float)tileSetInMap.G / (float)maxHeight;
         if (b) B = (float)tileSetInMap.B / (float)maxHeight;
         tileSpriteRenderer.color = new Color(R, G, B);
+    }
+
+    public void SetCoast(int position, Sprite sprite)
+    {
+        srCoast = coastPositions[position].gameObject.AddComponent<SpriteRenderer>();
+        srCoast.sortingOrder = 10;
+        srCoast.sprite = sprite;
     }
 }
 

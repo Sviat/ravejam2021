@@ -23,6 +23,7 @@ public class Map
     private int rareHumidityConst;
     private int R5Ratio;
 
+    List<(int, int)> aroundTiles= new List<(int, int)>();
 
     public Sprite mainDotSprite;
 
@@ -61,8 +62,69 @@ public class Map
         CreateBaseLandscape(R5Ratio);
         CreateSnowLandscape();
         InitTiles();
-        FillLandscapeAdnTemperature(randomRGB, tempCurve);
+        FillLandscapeAndTemperature(randomRGB, tempCurve);
         FillWaterValues(seed);
+    }
+
+    private void InitTiles()
+    {
+        for (int i = 0; i < SizeX; i++)
+            for (int j = 0; j < SizeY; j++)
+            {
+                mTiles.Add(new Tile(i, j));
+            }
+    }
+
+    private void FillLandscapeAndTemperature(System.Random randomRGB, AnimationCurve tempCurve)
+    {
+        LandscapeCode h;
+        for (int i = 1; i < SizeX; i += 2)
+            for (int j = 1; j < SizeY; j += 2)
+            {
+                if (j < 3 || j > SizeY - 3)
+                    h = snowLandscapeList[randomRGB.Next(0, snowLandscapeList.Count)];
+                else
+                    h = baseLandscapeList[randomRGB.Next(0, baseLandscapeList.Count)];
+
+                mTiles[ListIndex(i, j)].SetHeight(h);
+                FillTemperature(tempCurve, i, j, randomRGB.Next(-1, 2));
+                FillAroundHeight(i, j);
+            }
+    }
+
+    private void FillTemperature(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
+    {
+        float temp;
+        temp = tempCurve.Evaluate((float)y / SizeY) * (MAX_DEFAULT_TEMPERATURE + tempAddRatio);
+        temp = Mathf.Round(temp);
+
+        int R = (int)mTiles[ListIndex(x, y)].R;
+        int G = (int)temp;
+        int B = (int)mTiles[ListIndex(x, y)].B;
+
+        mTiles[ListIndex(x, y)].SetHeight(R, G, B);
+    }
+
+    private void FillAroundHeight(int x, int y)
+    {
+        float ratio;
+        SetAroundAllTiles(x, y);
+        for (int i = 0; i < aroundTiles.Count; i++)
+        {
+            int x1, y1;
+            x1 = aroundTiles[i].Item1;
+            y1 = aroundTiles[i].Item2;
+
+            if (!(x1 == x && y1 == y))
+            {
+                if (x1 == x || y1 == y)
+                    ratio = orthogonalRatio;
+                else
+                    ratio = diagonalRatio;
+
+                mTiles[ListIndex(x1, y1)].AddHeight(mTiles[ListIndex(x, y)].Height / ratio);
+            }
+        }
     }
 
     private void CreateSnowLandscape()
@@ -90,16 +152,7 @@ public class Map
             baseLandscapeList.Add(hR5);
     }
 
-    private void InitTiles()
-    {
-        for (int i = 0; i < SizeX; i++)
-            for (int j = 0; j < SizeY; j++)
-            {
-                mTiles.Add(new Tile(i, j));
-            }
-    }
-
-    private void FillWaterValues(int seed)
+     private void FillWaterValues(int seed)
     {
         System.Random randomW = new System.Random(seed);
         HeightLevel R;
@@ -148,61 +201,6 @@ public class Map
         return resB;
     }
 
-    private void FillTemp(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
-    {
-        float temp;
-        temp = tempCurve.Evaluate((float)y / SizeY) * (MAX_DEFAULT_TEMPERATURE + tempAddRatio);
-        temp = Mathf.Round(temp);
-
-        int R = (int)mTiles[ListIndex(x, y)].R;
-        int G = (int)temp;
-        int B = (int)mTiles[ListIndex(x, y)].B;
-
-        mTiles[ListIndex(x, y)].SetHeight(R, G, B);
-    }
-
-    private void FillLandscapeAdnTemperature(System.Random randomRGB, AnimationCurve tempCurve)
-    {
-        LandscapeCode h;
-        for (int i = 1; i < SizeX; i += 2)
-            for (int j = 1; j < SizeY; j += 2)
-            {
-                if (j < 3 || j > SizeY - 3)
-                    h = snowLandscapeList[randomRGB.Next(0, snowLandscapeList.Count)];
-                else
-                    h = baseLandscapeList[randomRGB.Next(0, baseLandscapeList.Count)];
-
-                mTiles[ListIndex(i, j)].SetHeight(h);
-                FillTemp(tempCurve, i, j, randomRGB.Next(-1, 2));
-                FillAroundHeight(i, j);
-            }
-    }
-
-    private void FillAroundHeight(int x, int y)
-    {
-        bool stopFlag = false;
-        float ratio;
-        for (int i = x - 1; i <= x + 1 && !stopFlag; i++)
-            for (int j = y - 1; j <= y + 1; j++)
-            {
-                if (i == SizeX)
-                {
-                    i = 0;
-                    stopFlag = true;
-                }
-
-                if (!(i == x && j == y))
-                {
-                    if (i == x || j == y)
-                        ratio = orthogonalRatio;
-                    else
-                        ratio = diagonalRatio;
-
-                    mTiles[ListIndex(i, j)].AddHeight(mTiles[ListIndex(x, y)].Height / ratio);
-                }
-            }
-    }
-
     private int ListIndex(int x, int y)
     {
         return y + SizeY * x;
@@ -235,7 +233,7 @@ public class Map
         }
     }
 
-    public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles, Dictionary<int, Sprite> coastList)
+    public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles)
     {
         // Set sprites by Height R
         foreach (var item in mTiles)
@@ -245,47 +243,7 @@ public class Map
             {
                 item.tileSprite = groundTiles[R];
             }
-
-            if (item.R == HeightLevel.R3_COAST)
-            {
-                int countWater = CountOrtoTiles(item.X, item.Y);
-                item.tileSprite = coastList[countWater];
-                RotateCoast();
-            }
         }
-
-
-    }
-
-    public  void RotateCoast()
-    {
-        // flip x,y 
-        // x - left, right
-        // y - up, down
-    }
-
-    private int CountOrtoTiles(int x, int y)
-    {
-        int res = 0;
-        int xLeft, xRight, yUp, yDown;
-
-        xLeft = x - 1;
-        xRight = x + 1;
-        if (xLeft < 0)
-            xLeft = SizeX - 1;
-        if (xRight > SizeX - 1)
-            xRight = 0;
-
-        if (mTiles[ListIndex(xLeft, y)].R < HeightLevel.R3_COAST)
-            res++;
-        if (mTiles[ListIndex(xRight, y)].R < HeightLevel.R3_COAST)
-            res++;
-        if (mTiles[ListIndex(x, y-1)].R < HeightLevel.R3_COAST)
-            res++;
-        if (mTiles[ListIndex(x, y+1)].R < HeightLevel.R3_COAST)
-            res++;
-
-        return res;
     }
 
     public void SetSprites(Dictionary<TemperatureLevel, Sprite> landTempTiles)
@@ -298,6 +256,7 @@ public class Map
                 item.landscapeModificator = landTempTiles[G];
         }
     }
+
     public void SetSpritesToObjects()
     {
         foreach (var item in tInfos)
@@ -308,4 +267,104 @@ public class Map
             }
         }
     }
+
+    public void SetCoasts(Sprite [] coastListSprites)
+    {
+        for (int i = 0; i < SizeX; i++)
+            for (int j = 1; j < SizeY - 1; j++)
+            {
+                if (mTiles[ListIndex(i, j)].R > HeightLevel.R3_COAST)
+                {
+                    SetAroundOrtoTiles(i, j);
+                    for (int indx=0; indx < aroundTiles.Count; indx++)
+                    {
+                        if (mTiles[ListIndex(aroundTiles[indx].Item1, aroundTiles[indx].Item2)].R < HeightLevel.R4_PLAIN)
+                            SetCoastTileInfo(coastListSprites[indx], i, j, indx);
+                    }
+                }
+            }
+    }
+
+    public void SetAroundOrtoTiles(int x, int y)
+    {
+        int xLeft, xRight;
+        if (x == 0)
+            xLeft = SizeX - 1;
+        else xLeft = x - 1;
+
+        if (x == SizeX - 1)
+            xRight = 0;
+        else xRight = x + 1;
+
+        aroundTiles.Clear();
+        aroundTiles.Add((xLeft, y));
+        aroundTiles.Add((xRight, y));
+        aroundTiles.Add((x, y + 1));
+        aroundTiles.Add((x, y - 1));
+    }
+
+    public void SetAroundDiagonalTiles(int x, int y)
+    {
+        int xLeft, xRight;
+        if (x == 0)
+            xLeft = SizeX - 1;
+        else xLeft = x - 1;
+
+        if (x == SizeX - 1)
+            xRight = 0;
+        else xRight = x + 1;
+
+        aroundTiles.Clear();
+        aroundTiles.Add((xLeft, y - 1));
+        aroundTiles.Add((xLeft, y+1));
+        aroundTiles.Add((xRight, y+1));
+        aroundTiles.Add((xRight, y - 1));
+    }
+
+    public void SetAroundAllTiles(int x, int y)
+    {
+        int xLeft, xRight;
+        if (x == 0)
+            xLeft = SizeX - 1;
+        else xLeft = x - 1;
+
+        if (x == SizeX - 1)
+            xRight = 0;
+        else xRight = x + 1;
+
+        aroundTiles.Clear();
+        for (int j = y - 1; j <= y + 1; j++)
+        {
+            aroundTiles.Add((xLeft, j));
+            if (x != j)
+                aroundTiles.Add((x, j));
+            aroundTiles.Add((xRight, j));
+        }
+    }
+
+    public void SetCoastTileInfo(Sprite sprite, int x, int y, int indexPosition)
+    {
+        List<TileInfo> findedTInfos = new List<TileInfo>();
+        findedTInfos = FindTInfos(x, y);
+        if (findedTInfos != null)
+        {
+            foreach (var item in findedTInfos)
+            {
+                item.SetCoast(indexPosition, sprite);
+            }
+        }
+    }
+
+    public List<TileInfo> FindTInfos(int x, int y)
+    {
+        List<TileInfo> result = new List<TileInfo>();
+        foreach (var item in tInfos)
+        {
+            if (item.tileSetInMap.X == x && item.tileSetInMap.Y == y)
+                result.Add(item);
+        }
+
+        return result;
+    }
+    
 }

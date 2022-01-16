@@ -14,7 +14,7 @@ public enum TilePosition
     rightDownPosition, 
     rightUpPosition
 }
-public class CostInitializer : MonoBehaviour
+public class CoastInitializer : MonoBehaviour
 {
     public Dictionary<TilePosition, Transform> coastPositions;
 

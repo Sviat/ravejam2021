@@ -29,7 +29,8 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private float orthogonalRatio = 1.65f;
     [SerializeField] private float diagonalRatio = 2.5f;
     [SerializeField] private int rareHumidityConst = 1;
-    [SerializeField] private int R5Ratio;
+    [SerializeField] private int R4Ratio;
+    [SerializeField] private int mainTileRatio;
 
     [SerializeField] private AnimationCurve tempCurve;
     private (bool, bool, bool) RGB = (true, true, true);
@@ -75,7 +76,7 @@ public class MapCreator : MonoBehaviour
             CreateMapTileObject(out mapRight);
 
 
-            map = new Map(x, y, R5Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst);
+            map = new Map(x, y, R4Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst, mainTileRatio);
             map.mainDotSprite = mainDotSprite;
             map.CreateGameObjects(spritePrefab, mapCenter, isCopy: false);
             map.CreateGameObjects(spritePrefab, mapLeft, isCopy: true);
@@ -91,7 +92,7 @@ public class MapCreator : MonoBehaviour
 
             map.SetSpritesToObjects();
 
-            map.SetCoasts(coastListSprites2);
+            map.SetCoasts(coastListSprites);
 
             CenterMap();
             Debug.Log($"Map create time = {System.DateTime.Now - time}");
@@ -123,7 +124,7 @@ public class MapCreator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateMap(sizeX, sizeY, mapCreatorSeed);
-            mapCreatorSeed++;
+           // mapCreatorSeed++;
             rgbChanged = false;
             RGB.Item1 = RGB.Item2 = RGB.Item3 = true;
         }

@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.8532722
+  m_AspectRatio: 2.2171767
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,10 +1514,10 @@ MonoBehaviour:
   - {fileID: -4217604053043422667, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
   - {fileID: 8379194143578921009, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
   - {fileID: 5811070981703167738, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: -2396022383621917705, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: 5118418954295823858, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
+  - {fileID: 8979777560067110718, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: -4366168490715999555, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
   landTempSprites:
-  - {fileID: -6108738378492305252, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 0}
   coastListSprites:
   - {fileID: -7135981051538578542, guid: e16b08df348e77a469a10dd11c90a01c, type: 3}
   - {fileID: 5009051111245038742, guid: e16b08df348e77a469a10dd11c90a01c, type: 3}
@@ -1535,7 +1535,8 @@ MonoBehaviour:
   orthogonalRatio: 1.65
   diagonalRatio: 2.5
   rareHumidityConst: 1
-  R5Ratio: 3
+  R4Ratio: 1
+  mainTileRatio: 4
   tempCurve:
     serializedVersion: 2
     m_Curve:
@@ -3104,7 +3105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1217872868
 Transform:
   m_ObjectHideFlags: 0

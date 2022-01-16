@@ -50,14 +50,19 @@ public class Tile
         landCode = _h;
     }
 
-    public void SetHeight (int heightR, int heightG, int heightB)
+    public void SetLandscape (int heightR, int heightG, int heightB)
     {
         landCode = new LandscapeCode(heightR, heightG, heightB);
     }
 
-    public void SetHeight(LandscapeCode height)
+    public void SetLandscape(LandscapeCode height)
     {
         this.landCode = height;
+    }
+
+    public void SetHeight(HeightLevel height)
+    {
+        this.landCode.R = height;
     }
 
     public void AddHeight(LandscapeCode addValue)

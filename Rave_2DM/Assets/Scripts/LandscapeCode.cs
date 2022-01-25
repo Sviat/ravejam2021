@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-public enum HeightLevel { R0_DEEP_OCEAN, R1,  R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
+public enum HeightLevel {R_UNDEFINED = -1, R0_DEEP_OCEAN, R1,  R2_OCEAN, R3_COAST, R4_PLAIN, R5_HILLS, R6_MOUNTAINS, R7, R8_EVEREST }
 public enum TemperatureLevel { G0_DEATH_TEMP, G1, G2_COLD_LIFE_LOW, G3_COLD, G4_BEST, G5_WARM, G6_HEAT, G7, G8_HELL }
 public enum HumidityLevel { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORMAL_CLIMAT, B5_DRY_CLIMATE, B6_STEPPE, B7, B8_DESERT }
 
@@ -56,6 +55,7 @@ public enum HumidityLevel { B0_OCEAN_OF_WATER, B1, B2_JUNGLE, B3_RESORT, B4_NORM
 
     private static int ClampLevel(int value, int lowest, int highest, int lowGap, int highGap)
     {
+        if (value == -1) return value; //for Undefined Tiles. MayBe delete Later (fill by 0 or 8)
         int result = value;
         result = result == lowGap ? result + 1 : result;
         result = result == highGap ? result - 1 : result;

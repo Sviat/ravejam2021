@@ -41,6 +41,7 @@ public class Tile
     {
         x = _x;
         y = _y;
+        landCode = new LandscapeCode(-1, 0, 0); // Add Undefined to All fields
     }
 
     public Tile(int _x, int _y, LandscapeCode _h)

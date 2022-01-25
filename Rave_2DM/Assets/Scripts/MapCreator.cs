@@ -29,7 +29,8 @@ public class MapCreator : MonoBehaviour
     [SerializeField] private float orthogonalRatio = 1.65f;
     [SerializeField] private float diagonalRatio = 2.5f;
     [SerializeField] private int rareHumidityConst = 1;
-    [SerializeField] private int R4Ratio;
+    [SerializeField] private int [] R2R4R6Ratio;
+
     [SerializeField] private int mainTileRatio;
 
     [SerializeField] private AnimationCurve tempCurve;
@@ -38,6 +39,7 @@ public class MapCreator : MonoBehaviour
 
     private void Start()
     {
+        R2R4R6Ratio = new int[3] { 1, 1, 1 };
         // Add sprite values to Dictionary (refactor later)
         groundTiles = new Dictionary<HeightLevel, Sprite>();
         landTempTiles = new Dictionary<TemperatureLevel, Sprite>();
@@ -76,7 +78,7 @@ public class MapCreator : MonoBehaviour
             CreateMapTileObject(out mapRight);
 
 
-            map = new Map(x, y, R4Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst, mainTileRatio);
+            map = new Map(x, y, R2R4R6Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst, mainTileRatio);
             map.mainDotSprite = mainDotSprite;
             map.CreateGameObjects(spritePrefab, mapCenter, isCopy: false);
             map.CreateGameObjects(spritePrefab, mapLeft, isCopy: true);
@@ -86,13 +88,17 @@ public class MapCreator : MonoBehaviour
             mapLeft.position = new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y);
             mapRight.position = new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y);
 
+            mapLeft.gameObject.SetActive(false);
+            mapRight.gameObject.SetActive(false);
+            // delete from hete
+
             map.SetSprites(groundTiles);
-            map.SetSprites(landTempTiles);
+            //map.SetSprites(landTempTiles);
 
 
             map.SetSpritesToObjects();
 
-            map.SetCoasts(coastListSprites);
+           // map.SetCoasts(coastListSprites);
 
             CenterMap();
             Debug.Log($"Map create time = {System.DateTime.Now - time}");

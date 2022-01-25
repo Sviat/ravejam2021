@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 2.2171767
+  m_AspectRatio: 1.8532722
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,13 +1509,13 @@ MonoBehaviour:
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
   mainDotSprite: {fileID: 2621643443015025942, guid: fd05d64586832ec49ad0dad28524e88d, type: 3}
   groundSprites:
-  - {fileID: -7487936362251120830, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: 6203483729184370586, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: -4217604053043422667, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: 8379194143578921009, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: 5811070981703167738, guid: 18829a5320d04b84c881644b4cbf96fd, type: 3}
-  - {fileID: 8979777560067110718, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
-  - {fileID: -4366168490715999555, guid: 4d5ff35ba9cb4fe4791de2b0f3d31cb2, type: 3}
+  - {fileID: 923313744616286059, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: -4222545554377554164, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: -3827530357942885138, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: 281725316603547883, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: -1261138074993470535, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: -8950802583947977274, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: 5879262665615944836, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
   landTempSprites:
   - {fileID: 0}
   coastListSprites:
@@ -1535,8 +1535,8 @@ MonoBehaviour:
   orthogonalRatio: 1.65
   diagonalRatio: 2.5
   rareHumidityConst: 1
-  R4Ratio: 1
-  mainTileRatio: 4
+  R2R4R6Ratio: 
+  mainTileRatio: 1
   tempCurve:
     serializedVersion: 2
     m_Curve:
@@ -3105,7 +3105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1217872868
 Transform:
   m_ObjectHideFlags: 0

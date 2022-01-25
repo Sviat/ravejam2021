@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class Map
@@ -14,9 +13,8 @@ public class Map
     [SerializeField] private List<TileInfo> tInfos;
 
     private int MAX_DEFAULT_TEMPERATURE = (int)TemperatureLevel.G4_BEST;
-
-    List<LandscapeCode> baseLandscapeList = new List<LandscapeCode>();
-    List<LandscapeCode> snowLandscapeList = new List<LandscapeCode>();
+    private List<LandscapeCode> baseLandscapeList = new List<LandscapeCode>();
+    private List<LandscapeCode> snowLandscapeList = new List<LandscapeCode>();
 
 
     private float orthogonalRatio;
@@ -25,8 +23,7 @@ public class Map
     private int[] R2R4R6Ratio;
     private int mainTileRatio;
     private System.Random levelRandom;
-
-    List<Point> aroundTiles = new List<Point>();
+    private List<Point> aroundTiles = new List<Point>();
 
     public Sprite mainDotSprite;
 
@@ -127,7 +124,7 @@ public class Map
 
         for (int i = 1; i < SizeX; i += 2)
         {
-            for (int j = 3; j < SizeY - 3; j += 2)
+            for (int j = 1; j < SizeY - 3; j += 2)
             {
                 FillOrthogonalHeight(i, j);
             }
@@ -193,7 +190,7 @@ public class Map
             foreach (var item in orthoList)
             {
                 if (mTiles[ListIndex(item)].R == HeightLevel.R_UNDEFINED)
-                    
+
                     mTiles[ListIndex(item)].SetHeight(HeightLevel.R5_HILLS);
             }
         }
@@ -208,7 +205,8 @@ public class Map
         List<HeightLevel> orthoHeights = new List<HeightLevel>();
         List<HeightLevel> diagonalHeights = new List<HeightLevel>(); ;
 
-        if (r2Count == 4)
+        // x4 Pattern 
+        if (r2Count == 4) // OTY
         {
             orthoHeights = new List<HeightLevel>()
             {
@@ -216,9 +214,8 @@ public class Map
                 HeightLevel.R2_OCEAN
             };
             diagonalHeights = new List<HeightLevel>() { HeightLevel.R0_DEEP_OCEAN };
-
         }
-        else if (r4Count == 4)
+        else if (r4Count == 4) // HM
         {
             orthoHeights = new List<HeightLevel>() { HeightLevel.R4_PLAIN };
             diagonalHeights = new List<HeightLevel>()
@@ -228,7 +225,7 @@ public class Map
                 HeightLevel.R5_HILLS
             };
         }
-        else if (r6Count == 4)
+        else if (r6Count == 4) // KPU
         {
             orthoHeights = new List<HeightLevel>()
             {
@@ -238,37 +235,24 @@ public class Map
             };
             diagonalHeights = new List<HeightLevel>() { HeightLevel.R8_EVEREST };
         }
-        
+
         if (orthoHeights.Count != 0 && diagonalHeights.Count != 0)
         {
             SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights);
+            return;
+        }
+        //x4 Pattern END
+
+
+        if (r2Count == 3)
+        {
+            
         }
     }
 
-    private List<Point> GetOrthoInQuad(Point[] coreTilesPoints)
+    private List<Point> GetOrthoInQuad(Point diagCoord)
     {
-        // ortho
-        // x0, y0+y1/2  && x3, y0+y1/2
-        List<Point> orthoCoord = new List<Point>();
-
-        //left
-        int newX = coreTilesPoints[0].x;
-        int newY = (coreTilesPoints[0].y + coreTilesPoints[1].y) / 2;
-        orthoCoord.Add(new Point(newX, newY));
-        // right
-        newX = coreTilesPoints[3].x;
-        orthoCoord.Add(new Point(newX, newY));
-        orthoCoord.Add(new Point(newX, newY));
-        // x0+x3/2, y0 && x0+x3/2,  y1
-        //down
-        newX = (coreTilesPoints[0].x + coreTilesPoints[3].x) / 2;
-        newY = coreTilesPoints[0].y;
-        orthoCoord.Add(new Point(newX, newY));
-        //up
-        newY = coreTilesPoints[1].y;
-        orthoCoord.Add(new Point(newX, newY));
-
-        return orthoCoord;
+        return GetAroundOrtoTiles(diagCoord.x, diagCoord.y);
     }
 
     private Point GetDiagonalInQuad(Point[] coreTilesPoints)
@@ -285,7 +269,7 @@ public class Map
         Point diagCoord = GetDiagonalInQuad(coreTilesPoints);
         mTiles[ListIndex(diagCoord)].SetHeight(RandomChoice(diagonalHeights, levelRandom));
 
-        foreach (var item in GetOrthoInQuad(coreTilesPoints))
+        foreach (var item in GetOrthoInQuad(diagCoord))
         {
             mTiles[ListIndex(item)].SetHeight(RandomChoice(orthoHeights, levelRandom));
         }

@@ -10,7 +10,7 @@ public class Map
     public static int SizeY { get; private set; }
 
     [SerializeField] private List<Tile> mTiles;
-    [SerializeField] private List<TileInfo> tInfos;
+    [SerializeField] private List<TileGameObject> tInfos;
 
     private int MAX_DEFAULT_TEMPERATURE = (int)TemperatureLevel.G4_BEST;
     private List<LandscapeCode> baseLandscapeList = new List<LandscapeCode>();
@@ -24,7 +24,6 @@ public class Map
     private int mainTileRatio;
     private System.Random levelRandom;
     private List<Point> aroundTiles = new List<Point>();
-
     public Sprite mainDotSprite;
 
     private Map()
@@ -38,7 +37,7 @@ public class Map
         SizeX = x;
         SizeY = y;
         mTiles = new List<Tile>();
-        tInfos = new List<TileInfo>();
+        tInfos = new List<TileGameObject>();
         this.R2R4R6Ratio = R2R4R6Ratio;
         this.orthogonalRatio = orthogonalRatio;
         this.diagonalRatio = diagonalRatio;
@@ -99,7 +98,8 @@ public class Map
                 for (int j = 3; j < SizeY - 3; j += 2)
                 {
                     var coreNeighbors = GetAroundAllTiles(i, j, 2).Concat(GetAroundOrtoTiles(i, j, 4)).ToList();
-
+                    Debug.Log($"CoreNeib = {coreNeighbors.Count}");
+                    
                     for (int mainCount = 0; mainCount < mainTileRatio; mainCount++)
                         coreNeighbors.Add(new Point(i, j));
 
@@ -176,7 +176,7 @@ public class Map
         var orthoList = GetAroundOrtoTiles(x, y);
         if (mTiles[ListIndex(x, y)].R == HeightLevel.R2_OCEAN)
         {
-            // RandomChoice??? How to choose this Rule or Pattern?
+            // if before haven't been filled by R2 (R0 / R2 / R3)
             foreach (var item in orthoList)
             {
                 if (mTiles[ListIndex(item)].R != HeightLevel.R2_OCEAN && mTiles[ListIndex(item)].R != HeightLevel.R0_DEEP_OCEAN)
@@ -186,7 +186,7 @@ public class Map
 
         if (mTiles[ListIndex(x, y)].R == HeightLevel.R6_MOUNTAINS)
         {
-            // RandomChoice??? How to choose this Rule or Pattern?
+            // if before haven't been filled 
             foreach (var item in orthoList)
             {
                 if (mTiles[ListIndex(item)].R == HeightLevel.R_UNDEFINED)
@@ -198,7 +198,7 @@ public class Map
 
     private void FillQuadByPatterns(Point baseTile)
     {
-        var coreTilesPoints = Get4CoreTiles(baseTile);
+        var coreTilesPoints = GetFourCoreTiles(baseTile);
         int r2Count = CountTilesByHeight(coreTilesPoints, HeightLevel.R2_OCEAN);
         int r4Count = CountTilesByHeight(coreTilesPoints, HeightLevel.R4_PLAIN);
         int r6Count = CountTilesByHeight(coreTilesPoints, HeightLevel.R6_MOUNTAINS);
@@ -266,19 +266,19 @@ public class Map
 
     private void SetFullPattern(Point[] coreTilesPoints, List<HeightLevel> diagonalHeights, List<HeightLevel> orthoHeights)
     {
-        Point diagCoord = GetDiagonalInQuad(coreTilesPoints);
-        mTiles[ListIndex(diagCoord)].SetHeight(RandomChoice(diagonalHeights, levelRandom));
+        Point diagPoint = GetDiagonalInQuad(coreTilesPoints);
+        mTiles[ListIndex(diagPoint)].SetHeight(RandomChoice(diagonalHeights, levelRandom));
 
-        foreach (var item in GetOrthoInQuad(diagCoord))
+        foreach (var orthoPoint in GetOrthoInQuad(diagPoint))
         {
-            mTiles[ListIndex(item)].SetHeight(RandomChoice(orthoHeights, levelRandom));
+            mTiles[ListIndex(orthoPoint)].SetHeight(RandomChoice(orthoHeights, levelRandom));
         }
     }
 
-    private int CountTilesByHeight(Point[] tilesCoord, HeightLevel height)
+    private int CountTilesByHeight(Point[] tilePoints, HeightLevel height)
     {
         int result = 0;
-        foreach (var item in tilesCoord)
+        foreach (var item in tilePoints)
         {
             if (mTiles[ListIndex(item)].R == height)
                 result++;
@@ -286,7 +286,7 @@ public class Map
         return result;
     }
 
-    private Point[] Get4CoreTiles(Point p)
+    private Point[] GetFourCoreTiles(Point p)
     {
         var coreTiles = new Point[4];
         coreTiles[0] = new Point(p.x, p.y);
@@ -435,12 +435,12 @@ public class Map
     public void CreateGameObjects(Transform prefab, Transform parent, bool isCopy)
     {
         Transform go;
-        TileInfo ti;
+        TileGameObject ti;
 
         foreach (var item in mTiles)
         {
             go = MonoBehaviour.Instantiate(prefab, new Vector2(item.X, item.Y), Quaternion.identity, parent);
-            ti = go.gameObject.GetComponent<TileInfo>();
+            ti = go.gameObject.GetComponent<TileGameObject>();
             ti.SetTileInfo(item, isCopy);
             //ti.DrawTile(true, true, true);
 
@@ -516,18 +516,26 @@ public class Map
         List<Point> result = new List<Point>();
         int xLeft = (x - distance + SizeX) % SizeX;
         int xRight = (x + distance) % SizeX;
+        
+        result.Add(new Point(xLeft, y)); // 0
         if ((y + distance) < SizeY)
         {
-            result.Add(new Point(x, y + distance));
+            result.Add(new Point(x, y + distance)); // 1 
         }
+
+        result.Add(new Point(xRight, y)); //2
         if ((y - distance) >= 0)
         {
-            result.Add(new Point(x, y - distance));
+            result.Add(new Point(x, y - distance)); //3
         }
-        result.Add(new Point(xLeft, y));
-        result.Add(new Point(xRight, y));
+        
+        
 
         return result;
+    }
+    public List<Point> GetAroundOrtoTiles(Point p, int distance = 1)
+    {
+        return GetAroundOrtoTiles(p.x, p.y, distance);
     }
 
     public List<Point> GetAroundDiagonalTiles(int x, int y, int distance = 1)
@@ -556,7 +564,7 @@ public class Map
 
     public void SetCoastTileInfo(Sprite sprite, int x, int y, int indexPosition)
     {
-        List<TileInfo> findedTInfos = new List<TileInfo>();
+        List<TileGameObject> findedTInfos = new List<TileGameObject>();
         findedTInfos = FindTInfos(x, y);
         if (findedTInfos != null)
         {
@@ -567,12 +575,12 @@ public class Map
         }
     }
 
-    public List<TileInfo> FindTInfos(int x, int y)
+    public List<TileGameObject> FindTInfos(int x, int y)
     {
-        List<TileInfo> result = new List<TileInfo>();
+        List<TileGameObject> result = new List<TileGameObject>();
         foreach (var item in tInfos)
         {
-            if (item.tileSetInMap.X == x && item.tileSetInMap.Y == y)
+            if (item.tile.X == x && item.tile.Y == y)
                 result.Add(item);
         }
         return result;

@@ -9,10 +9,10 @@ public enum BuildingSlot
 }
 
 [Serializable]
-public class TileInfo : MonoBehaviour
+public class TileGameObject : MonoBehaviour
 {
-    [SerializeField] public Tile tileSetInMap;
-    private SpriteRenderer tileSpriteRenderer;
+    [SerializeField] public Tile tile;
+    private SpriteRenderer spriteRenderer;
     [SerializeField] public Transform LandscapeModificator;
     [SerializeField] public Transform Resources;
     [SerializeField] public Transform Building;
@@ -24,28 +24,28 @@ public class TileInfo : MonoBehaviour
     private SpriteRenderer srCoast;
     public bool GetTileSprite()
     {
-        if (tileSpriteRenderer == null)
-            tileSpriteRenderer = GetComponent<SpriteRenderer>();
-        if (tileSetInMap.tileSprite != null)
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        if (tile.tileSprite != null)
             return true;
         return false;
     }
 
-    public void SetTileInfo(Tile tile, bool _isCopy)
+    public void SetTileInfo(Tile tile, bool isCopy)
     {
-        tileSetInMap = tile;
-        isCopy = _isCopy;
+        this.tile = tile;
+        this.isCopy = isCopy;
     }
 
     public void PrintData()
     {
-        Debug.Log($"R = {tileSetInMap.R} / G = {tileSetInMap.G} / B = {tileSetInMap.B}");
+        Debug.Log($"R = {tile.R} / G = {tile.G} / B = {tile.B}");
     }
 
     public void SetSpriteToTile()
     {
-        tileSpriteRenderer.sprite = tileSetInMap.tileSprite;
-        LandscapeModificator.GetComponent<SpriteRenderer>().sprite = tileSetInMap.landscapeModificator;   
+        spriteRenderer.sprite = tile.tileSprite;
+        LandscapeModificator.GetComponent<SpriteRenderer>().sprite = tile.landscapeModificator;   
     }
 
     public void DrawTile(bool r, bool g, bool b)
@@ -53,10 +53,10 @@ public class TileInfo : MonoBehaviour
         int maxHeight = 8;
         float R, G, B;
         R = G = B = 0;
-        if (r) R = (float)tileSetInMap.R / (float)maxHeight;
-        if (g) G = (float)tileSetInMap.G / (float)maxHeight;
-        if (b) B = (float)tileSetInMap.B / (float)maxHeight;
-        tileSpriteRenderer.color = new Color(R, G, B);
+        if (r) R = (float)tile.R / (float)maxHeight;
+        if (g) G = (float)tile.G / (float)maxHeight;
+        if (b) B = (float)tile.B / (float)maxHeight;
+        spriteRenderer.color = new Color(R, G, B);
     }
 
     public void SetCoast(int position, Sprite sprite)

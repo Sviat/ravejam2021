@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 2.4281769
+  m_AspectRatio: 2.1211112
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,13 +1509,13 @@ MonoBehaviour:
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
   mainDotSprite: {fileID: 2621643443015025942, guid: fd05d64586832ec49ad0dad28524e88d, type: 3}
   groundSprites:
-  - {fileID: 923313744616286059, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: -4222545554377554164, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: -3141411476992131070, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: 281725316603547883, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: -1261138074993470535, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: -8950802583947977274, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: 5879262665615944836, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: 3628175665402877572, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: 6152426803951011975, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: -609439567413670038, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: 2826057494908718697, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: -3228551757831171561, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: -830715331577617366, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
+  - {fileID: 5143857731011569560, guid: 64a9fd19a4cccae4e806994eec3d5b16, type: 3}
   landTempSprites:
   - {fileID: 0}
   coastListSprites:

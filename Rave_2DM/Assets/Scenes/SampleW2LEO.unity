@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.8532722
+  m_AspectRatio: 2.4281769
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1511,7 @@ MonoBehaviour:
   groundSprites:
   - {fileID: 923313744616286059, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
   - {fileID: -4222545554377554164, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
-  - {fileID: -3827530357942885138, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
+  - {fileID: -3141411476992131070, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
   - {fileID: 281725316603547883, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
   - {fileID: -1261138074993470535, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}
   - {fileID: -8950802583947977274, guid: ef5cc286c7251ce45be764a9a45c2ed0, type: 3}

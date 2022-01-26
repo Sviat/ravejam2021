@@ -99,7 +99,7 @@ public class Map
                 {
                     var coreNeighbors = GetAroundAllTiles(i, j, 2).Concat(GetAroundOrtoTiles(i, j, 4)).ToList();
                     Debug.Log($"CoreNeib = {coreNeighbors.Count}");
-                    
+
                     for (int mainCount = 0; mainCount < mainTileRatio; mainCount++)
                         coreNeighbors.Add(new Point(i, j));
 
@@ -113,6 +113,8 @@ public class Map
             }
         }
 
+
+
         for (int i = 1; i < SizeX; i += 2)
         {
             for (int j = 1; j < SizeY - 3; j += 2)
@@ -122,13 +124,26 @@ public class Map
         }
 
 
-        for (int i = 1; i < SizeX; i += 2)
+        //Fill Polar Cap (R0, R2)
+        for (int i = 0; i < SizeX; i++)
         {
-            for (int j = 1; j < SizeY - 3; j += 2)
+            for (int j = 0; j < 3; j++)
             {
-                FillOrthogonalHeight(i, j);
+                h = snowLandscapeList[levelRandom.Next(0, snowLandscapeList.Count)];
+                mTiles[ListIndex(i, j)].SetLandscape(h);
+                h = snowLandscapeList[levelRandom.Next(0, snowLandscapeList.Count)];
+                mTiles[ListIndex(i, SizeY - j - 1)].SetLandscape(h);
             }
         }
+
+
+         for (int i = 1; i < SizeX; i += 2)
+         {
+             for (int j = 1; j < SizeY - 3; j += 2)
+             {
+                 FillOrthogonalHeight(i, j);
+             }
+         }
 
 
         /* for (int i = 0; i < SizeX; i += 2)
@@ -141,16 +156,8 @@ public class Map
 
 
 
-        // Fill Polar Cap (R0, R2)
-        /*  for (int i = 1; i < SizeX; i += 2)
-          {
-              int j = 1;
-              h = snowLandscapeList[levelRandom.Next(0, snowLandscapeList.Count)];
-              mTiles[ListIndex(i, j)].SetLandscape(h);
-              h = snowLandscapeList[levelRandom.Next(0, snowLandscapeList.Count)];
-              mTiles[ListIndex(i, SizeY - j - 1)].SetLandscape(h);
 
-          }*/
+
     }
 
     public T RandomChoice<T>(List<T> bag, System.Random random)
@@ -179,12 +186,12 @@ public class Map
             // if before haven't been filled by R2 (R0 / R2 / R3)
             foreach (var item in orthoList)
             {
-                if (mTiles[ListIndex(item)].R != HeightLevel.R2_OCEAN && mTiles[ListIndex(item)].R != HeightLevel.R0_DEEP_OCEAN)
+                if (mTiles[ListIndex(item)].R == HeightLevel.R_UNDEFINED)
                     mTiles[ListIndex(item)].SetHeight(HeightLevel.R3_COAST);
             }
         }
 
-        if (mTiles[ListIndex(x, y)].R == HeightLevel.R6_MOUNTAINS)
+        else if (mTiles[ListIndex(x, y)].R == HeightLevel.R6_MOUNTAINS)
         {
             // if before haven't been filled 
             foreach (var item in orthoList)
@@ -192,6 +199,16 @@ public class Map
                 if (mTiles[ListIndex(item)].R == HeightLevel.R_UNDEFINED)
 
                     mTiles[ListIndex(item)].SetHeight(HeightLevel.R5_HILLS);
+            }
+        }
+        else if (mTiles[ListIndex(x, y)].R == HeightLevel.R4_PLAIN)
+        {
+            // if before haven't been filled 
+            foreach (var item in orthoList)
+            {
+                if (mTiles[ListIndex(item)].R == HeightLevel.R_UNDEFINED)
+
+                    mTiles[ListIndex(item)].SetHeight(HeightLevel.R4_PLAIN);
             }
         }
     }
@@ -203,8 +220,199 @@ public class Map
         int r4Count = CountTilesByHeight(coreTilesPoints, HeightLevel.R4_PLAIN);
         int r6Count = CountTilesByHeight(coreTilesPoints, HeightLevel.R6_MOUNTAINS);
         List<HeightLevel> orthoHeights = new List<HeightLevel>();
-        List<HeightLevel> diagonalHeights = new List<HeightLevel>(); ;
+        List<HeightLevel> diagonalHeights = new List<HeightLevel>();
 
+
+        if (PrepareFourEqualInQuad(r2Count, r4Count, r6Count, out orthoHeights, out diagonalHeights))
+        {
+            SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights, orthoRandom: true);
+            return;
+        }
+        else if (PrepareTreeEqualInQuad(r2Count, r4Count, r6Count, out orthoHeights, out diagonalHeights))
+        {
+            HeightLevel whatToRotate = r2Count == 1 ? HeightLevel.R2_OCEAN : r4Count == 1 ? HeightLevel.R4_PLAIN : HeightLevel.R6_MOUNTAINS;
+            orthoHeights = RotateOrthoTreeEqualsPattern(coreTilesPoints, orthoHeights, whatToRotate);
+            SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights, orthoRandom: false);
+            return;
+        }
+        else if (r2Count != 1 && r4Count != 1 && r6Count != 1)
+        {   // diagonal
+            if (mTiles[ListIndex(coreTilesPoints[0])].R == mTiles[ListIndex(coreTilesPoints[2])].R &&
+                mTiles[ListIndex(coreTilesPoints[1])].R == mTiles[ListIndex(coreTilesPoints[3])].R)
+            {
+                PrepareTwoEqualInQuadDiagonal(r2Count, r4Count, r6Count, out orthoHeights, out diagonalHeights);
+                SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights, orthoRandom: true);
+                return;
+            }
+            else // orthogonal
+            {
+                PrepareTwoEqualInQuadOrthogonal(r2Count, r4Count, r6Count, out orthoHeights, out diagonalHeights);
+                HeightLevel whatToRotate = r2Count == 2 ? HeightLevel.R2_OCEAN : r4Count == 2 ? HeightLevel.R4_PLAIN : HeightLevel.R6_MOUNTAINS;
+                orthoHeights = RotateOrthoTwoEqualsPattern(coreTilesPoints, orthoHeights, whatToRotate);
+                SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights, orthoRandom: false);
+                return;
+            }
+        }
+        else
+        {
+            if (r2Count == 2)
+            {
+                mTiles[ListIndex(GetDiagonalInQuad(coreTilesPoints))].SetHeight(HeightLevel.R3_COAST);
+            }
+            else if (r4Count == 2)
+            {
+                mTiles[ListIndex(GetDiagonalInQuad(coreTilesPoints))].SetHeight(HeightLevel.R4_PLAIN);
+            }
+            else if (r6Count == 2)
+            {
+                mTiles[ListIndex(GetDiagonalInQuad(coreTilesPoints))].SetHeight(HeightLevel.R6_MOUNTAINS);
+            }
+        }
+
+    }
+
+    private List<HeightLevel> RotateOrthoTreeEqualsPattern(Point[] corePoints, List<HeightLevel> orthoHeights, HeightLevel notMainHeight)
+    {
+        int notMainIndex = -1;
+        for (int i = 0; i < corePoints.Length; i++)
+        {
+            if (mTiles[ListIndex(corePoints[i])].R == notMainHeight)
+            {
+                notMainIndex = i;
+                break;
+            }
+        }
+        int moveArray = (corePoints.Length - notMainIndex + 1) % corePoints.Length;
+        return new List<HeightLevel>(orthoHeights.Skip(moveArray).Concat(orthoHeights.Take(moveArray)).ToArray());
+    }
+
+    private List<HeightLevel> RotateOrthoTwoEqualsPattern(Point[] corePoints, List<HeightLevel> orthoHeights, HeightLevel notMainHeight)
+    {
+        int moveArray = 0;
+        while (mTiles[ListIndex(corePoints[0])].R <= mTiles[ListIndex(corePoints[3])].R && mTiles[ListIndex(corePoints[1])].R <= mTiles[ListIndex(corePoints[2])].R)
+        {
+            corePoints = corePoints.Skip(1).Concat(corePoints.Take(1)).ToArray();
+            moveArray++;
+            if (moveArray > 5)
+            {
+                throw new Exception("Infinite while in method RotateOrthoTwoEqualsPattern");
+            }
+        }
+        moveArray = orthoHeights.Count - moveArray;
+        orthoHeights = new List<HeightLevel>(orthoHeights.Skip(moveArray).Concat(orthoHeights.Take(moveArray)).ToArray());
+        return orthoHeights;
+    }
+
+    private bool PrepareTwoEqualInQuadDiagonal(int r2Count, int r4Count, int r6Count, out List<HeightLevel> orthoHeights, out List<HeightLevel> diagonalHeights)
+    {
+        // x2 diagonal Pattern 
+        if (r2Count == 2 && r4Count == 2) // D
+        {
+            orthoHeights = new List<HeightLevel>() { HeightLevel.R3_COAST };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R2_OCEAN, HeightLevel.R3_COAST, HeightLevel.R4_PLAIN };
+            return true;
+        }
+        else if (r2Count == 2 && r6Count == 2) // C
+        {
+            orthoHeights = new List<HeightLevel>() { HeightLevel.R3_COAST };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R3_COAST, HeightLevel.R5_HILLS };
+            return true;
+        }
+        else if (r4Count == 2 && r6Count == 2) // B
+        {
+            orthoHeights = new List<HeightLevel> { HeightLevel.R5_HILLS };
+            diagonalHeights = new List<HeightLevel>() { HeightLevel.R4_PLAIN, HeightLevel.R5_HILLS, HeightLevel.R6_MOUNTAINS };
+            return true;
+        }
+        //x2 diagonal Pattern END
+
+        orthoHeights = new List<HeightLevel>();
+        diagonalHeights = new List<HeightLevel>();
+        return false;
+    }
+
+    private bool PrepareTwoEqualInQuadOrthogonal(int r2Count, int r4Count, int r6Count, out List<HeightLevel> orthoHeights, out List<HeightLevel> diagonalHeights)
+    {
+        // x2 orthogonal Pattern 
+        if (r2Count == 2 && r4Count == 2) // N
+        {
+            orthoHeights = new List<HeightLevel>() { HeightLevel.R4_PLAIN, HeightLevel.R3_COAST, HeightLevel.R2_OCEAN, HeightLevel.R3_COAST };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R3_COAST };
+            return true;
+        }
+        else if (r2Count == 2 && r6Count == 2) // Z
+        {
+            orthoHeights = new List<HeightLevel>() { HeightLevel.R6_MOUNTAINS, HeightLevel.R3_COAST, HeightLevel.R2_OCEAN, HeightLevel.R3_COAST };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R3_COAST };
+            return true;
+        }
+        else if (r4Count == 2 && r6Count == 2) // L
+        {
+            orthoHeights = new List<HeightLevel> { HeightLevel.R6_MOUNTAINS, HeightLevel.R5_HILLS, HeightLevel.R4_PLAIN, HeightLevel.R5_HILLS };
+            diagonalHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS };
+            return true;
+        }
+        //x2 orthogonal Pattern END
+
+        orthoHeights = new List<HeightLevel>();
+        diagonalHeights = new List<HeightLevel>();
+        return false;
+    }
+
+    private bool PrepareTreeEqualInQuad(int r2Count, int r4Count, int r6Count, out List<HeightLevel> orthoHeights, out List<HeightLevel> diagonalHeights)
+    {
+        // x3 Pattern 
+        if (r2Count == 3) // JS
+        {
+            orthoHeights = new List<HeightLevel>()
+            {
+                HeightLevel.R3_COAST, HeightLevel.R3_COAST,
+                HeightLevel.R2_OCEAN, HeightLevel.R2_OCEAN
+            };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R2_OCEAN };
+            return true;
+        }
+        else if (r4Count == 3) // IG
+        {
+            if (r2Count == 1) // I
+            {
+                orthoHeights = new List<HeightLevel>() { HeightLevel.R3_COAST, HeightLevel.R3_COAST, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN };
+            }
+            else  //G
+            {
+                orthoHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN };
+            }
+
+            diagonalHeights = new List<HeightLevel>()
+            {
+                HeightLevel.R3_COAST,
+                HeightLevel.R4_PLAIN
+            };
+            return true;
+        }
+        else if (r6Count == 3) // FQ
+        {
+            if (r2Count == 1) // Q
+            {
+                orthoHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R6_MOUNTAINS, HeightLevel.R6_MOUNTAINS };
+            }
+            else  //F
+            {
+                orthoHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R6_MOUNTAINS, HeightLevel.R6_MOUNTAINS };
+            }
+
+            diagonalHeights = new List<HeightLevel>() { HeightLevel.R6_MOUNTAINS };
+            return true;
+        }
+        //x3 Pattern END
+
+        orthoHeights = new List<HeightLevel>();
+        diagonalHeights = new List<HeightLevel>();
+        return false;
+    }
+
+    private bool PrepareFourEqualInQuad(int r2Count, int r4Count, int r6Count, out List<HeightLevel> orthoHeights, out List<HeightLevel> diagonalHeights)
+    {
         // x4 Pattern 
         if (r2Count == 4) // OTY
         {
@@ -213,7 +421,8 @@ public class Map
                 HeightLevel.R0_DEEP_OCEAN,
                 HeightLevel.R2_OCEAN
             };
-            diagonalHeights = new List<HeightLevel>() { HeightLevel.R0_DEEP_OCEAN };
+            diagonalHeights = new List<HeightLevel> { HeightLevel.R0_DEEP_OCEAN };
+            return true;
         }
         else if (r4Count == 4) // HM
         {
@@ -224,6 +433,7 @@ public class Map
                 HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN, // Add R4 Here to change Ratio
                 HeightLevel.R5_HILLS
             };
+            return true;
         }
         else if (r6Count == 4) // KPU
         {
@@ -234,20 +444,13 @@ public class Map
                 HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R5_HILLS
             };
             diagonalHeights = new List<HeightLevel>() { HeightLevel.R8_EVEREST };
-        }
-
-        if (orthoHeights.Count != 0 && diagonalHeights.Count != 0)
-        {
-            SetFullPattern(coreTilesPoints, diagonalHeights, orthoHeights);
-            return;
+            return true;
         }
         //x4 Pattern END
 
-
-        if (r2Count == 3)
-        {
-            
-        }
+        orthoHeights = new List<HeightLevel>();
+        diagonalHeights = new List<HeightLevel>();
+        return false;
     }
 
     private List<Point> GetOrthoInQuad(Point diagCoord)
@@ -264,16 +467,35 @@ public class Map
         return diagCoord;
     }
 
-    private void SetFullPattern(Point[] coreTilesPoints, List<HeightLevel> diagonalHeights, List<HeightLevel> orthoHeights)
+    private void SetFullPattern(Point[] coreTilesPoints, List<HeightLevel> diagonalHeights, List<HeightLevel> orthoHeights, bool orthoRandom)
     {
         Point diagPoint = GetDiagonalInQuad(coreTilesPoints);
-        mTiles[ListIndex(diagPoint)].SetHeight(RandomChoice(diagonalHeights, levelRandom));
-
-        foreach (var orthoPoint in GetOrthoInQuad(diagPoint))
+        if (diagonalHeights.Count == 1)
         {
-            mTiles[ListIndex(orthoPoint)].SetHeight(RandomChoice(orthoHeights, levelRandom));
+            mTiles[ListIndex(diagPoint)].SetHeight(diagonalHeights.FirstOrDefault());
+        }
+        else
+        {
+            mTiles[ListIndex(diagPoint)].SetHeight(RandomChoice(diagonalHeights, levelRandom));
+        }
+
+        if (orthoRandom)
+        {
+            foreach (var orthoPoint in GetOrthoInQuad(diagPoint))
+            {
+                mTiles[ListIndex(orthoPoint)].SetHeight(RandomChoice(orthoHeights, levelRandom));
+            }
+        }
+        else
+        {
+            List<Point> orthoPoints = GetOrthoInQuad(diagPoint);
+            for (int i = 0; i < orthoPoints.Count; i++)
+            {
+                mTiles[ListIndex(orthoPoints[i])].SetHeight(orthoHeights[i]);
+            }
         }
     }
+
 
     private int CountTilesByHeight(Point[] tilePoints, HeightLevel height)
     {
@@ -459,6 +681,70 @@ public class Map
         }
     }
 
+    public List<Point> GetAroundOrtoTiles(int x, int y, int distance = 1)
+    {
+        List<Point> result = new List<Point>();
+        int xLeft = (x - distance + SizeX) % SizeX;
+        int xRight = (x + distance) % SizeX;
+
+        result.Add(new Point(xLeft, y)); // 0
+        if ((y + distance) < SizeY)
+        {
+            result.Add(new Point(x, y + distance)); // 1 
+        }
+
+        result.Add(new Point(xRight, y)); //2
+        if ((y - distance) >= 0)
+        {
+            result.Add(new Point(x, y - distance)); //3
+        }
+
+
+
+        return result;
+    }
+    public List<Point> GetAroundOrtoTiles(Point p, int distance = 1)
+    {
+        return GetAroundOrtoTiles(p.x, p.y, distance);
+    }
+
+    public List<Point> GetAroundDiagonalTiles(int x, int y, int distance = 1)
+    {
+        List<Point> result = new List<Point>();
+        int xLeft = (x - distance + SizeX) % SizeX;
+        int xRight = (x + distance) % SizeX;
+        if ((y + distance) < SizeY)
+        {
+            result.Add(new Point(xLeft, y + distance));
+            result.Add(new Point(xRight, y + distance));
+        }
+        if ((y - distance) >= 0)
+        {
+            result.Add(new Point(xLeft, y - distance));
+            result.Add(new Point(xRight, y - distance));
+        }
+
+        return result;
+    }
+
+    public List<Point> GetAroundAllTiles(int x, int y, int distance = 1)
+    {
+        return GetAroundOrtoTiles(x, y, distance).Concat(GetAroundDiagonalTiles(x, y, distance)).ToList();
+    }
+
+    public void SetCoastTileInfo(Sprite sprite, int x, int y, int indexPosition)
+    {
+        List<TileGameObject> findedTInfos = new List<TileGameObject>();
+        findedTInfos = FindTInfos(x, y);
+        if (findedTInfos != null)
+        {
+            foreach (var item in findedTInfos)
+            {
+                item.SetCoast(indexPosition, sprite);
+            }
+        }
+    }
+
     public void SetSprites(Dictionary<HeightLevel, Sprite> groundTiles)
     {
         // Set sprites by Height R
@@ -509,70 +795,6 @@ public class Map
                     }
                 }
             }
-    }
-
-    public List<Point> GetAroundOrtoTiles(int x, int y, int distance = 1)
-    {
-        List<Point> result = new List<Point>();
-        int xLeft = (x - distance + SizeX) % SizeX;
-        int xRight = (x + distance) % SizeX;
-        
-        result.Add(new Point(xLeft, y)); // 0
-        if ((y + distance) < SizeY)
-        {
-            result.Add(new Point(x, y + distance)); // 1 
-        }
-
-        result.Add(new Point(xRight, y)); //2
-        if ((y - distance) >= 0)
-        {
-            result.Add(new Point(x, y - distance)); //3
-        }
-        
-        
-
-        return result;
-    }
-    public List<Point> GetAroundOrtoTiles(Point p, int distance = 1)
-    {
-        return GetAroundOrtoTiles(p.x, p.y, distance);
-    }
-
-    public List<Point> GetAroundDiagonalTiles(int x, int y, int distance = 1)
-    {
-        List<Point> result = new List<Point>();
-        int xLeft = (x - distance + SizeX) % SizeX;
-        int xRight = (x + distance) % SizeX;
-        if ((y + distance) < SizeY)
-        {
-            result.Add(new Point(xLeft, y + distance));
-            result.Add(new Point(xRight, y + distance));
-        }
-        if ((y - distance) >= 0)
-        {
-            result.Add(new Point(xLeft, y - distance));
-            result.Add(new Point(xRight, y - distance));
-        }
-
-        return result;
-    }
-
-    public List<Point> GetAroundAllTiles(int x, int y, int distance = 1)
-    {
-        return GetAroundOrtoTiles(x, y, distance).Concat(GetAroundDiagonalTiles(x, y, distance)).ToList();
-    }
-
-    public void SetCoastTileInfo(Sprite sprite, int x, int y, int indexPosition)
-    {
-        List<TileGameObject> findedTInfos = new List<TileGameObject>();
-        findedTInfos = FindTInfos(x, y);
-        if (findedTInfos != null)
-        {
-            foreach (var item in findedTInfos)
-            {
-                item.SetCoast(indexPosition, sprite);
-            }
-        }
     }
 
     public List<TileGameObject> FindTInfos(int x, int y)

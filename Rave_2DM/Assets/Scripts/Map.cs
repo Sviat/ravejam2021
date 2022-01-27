@@ -65,7 +65,7 @@ public class Map
         CreateSnowLandscape();
         InitTiles();
         FillLandscape();
-        ///FillTemperature(tempCurve);
+        FillTemperature(tempCurve);
         //FillWaterValues();
     }
 
@@ -88,6 +88,7 @@ public class Map
             {
                 h = baseLandscapeList[levelRandom.Next(0, baseLandscapeList.Count)];
                 mTiles[ListIndex(i, j)].SetLandscape(h);
+
             }
         }
 
@@ -107,11 +108,12 @@ public class Map
                     h = mTiles[ListIndex(coreTileChosen.x, coreTileChosen.y)].Height;
 
                     mTiles[ListIndex(i, j)].SetLandscape(h);
-                    //FillTemperature(tempCurve, i, j, levelRandom.Next(-1, 2));
+
                     //FillAroundHeight(i, j);
                 }
             }
         }
+
 
 
 
@@ -124,10 +126,21 @@ public class Map
         }
 
 
+
+
+
+        for (int i = 1; i < SizeX; i += 2)
+        {
+            for (int j = 1; j < SizeY - 3; j += 2)
+            {
+                FillOrthogonalHeight(i, j);
+            }
+        }
+
         //Fill Polar Cap (R0, R2)
         for (int i = 0; i < SizeX; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 2; j++)
             {
                 h = snowLandscapeList[levelRandom.Next(0, snowLandscapeList.Count)];
                 mTiles[ListIndex(i, j)].SetLandscape(h);
@@ -137,15 +150,6 @@ public class Map
         }
 
 
-         for (int i = 1; i < SizeX; i += 2)
-         {
-             for (int j = 1; j < SizeY - 3; j += 2)
-             {
-                 FillOrthogonalHeight(i, j);
-             }
-         }
-
-
         /* for (int i = 0; i < SizeX; i += 2)
          {
              for (int j = 2; j < SizeY - 2; j += 2)
@@ -153,11 +157,6 @@ public class Map
                  FillDiagonalHeight(i, j);
              }
          }*/
-
-
-
-
-
     }
 
     public T RandomChoice<T>(List<T> bag, System.Random random)
@@ -165,17 +164,23 @@ public class Map
         return bag[random.Next(0, bag.Count)];
     }
 
-    private void FillTemperature(AnimationCurve tempCurve, int x, int y, int tempAddRatio)
+    private void FillTemperature(AnimationCurve tempCurve)
     {
         float temp;
-        temp = tempCurve.Evaluate((float)y / SizeY) * (MAX_DEFAULT_TEMPERATURE + tempAddRatio);
-        temp = Mathf.Round(temp);
+        for (int x = 0; x < SizeX; x++)
+        {
+            for (int y = 0; y < SizeY; y++)
+            {
+                temp = tempCurve.Evaluate((float)y / SizeY) * (MAX_DEFAULT_TEMPERATURE + levelRandom.Next(-1, 2));
+                temp = Mathf.Round(temp);
 
-        int R = (int)mTiles[ListIndex(x, y)].R;
-        int G = (int)temp;
-        int B = (int)mTiles[ListIndex(x, y)].B;
+                int R = (int)mTiles[ListIndex(x, y)].R;
+                int G = (int)temp;
+                int B = (int)mTiles[ListIndex(x, y)].B;
 
-        mTiles[ListIndex(x, y)].SetLandscape(R, G, B);
+                mTiles[ListIndex(x, y)].SetLandscape(R, G, B);
+            }
+        }
     }
 
     private void FillOrthogonalHeight(int x, int y)

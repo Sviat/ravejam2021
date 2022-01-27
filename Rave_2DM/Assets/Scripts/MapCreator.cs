@@ -53,7 +53,7 @@ public class MapCreator : MonoBehaviour
         groundTiles.Add(HeightLevel.R8_EVEREST, groundSprites[6]);
 
         landTempTiles.Add(TemperatureLevel.G0_DEATH_TEMP, landTempSprites[0]);
-        landTempTiles.Add(TemperatureLevel.G2_COLD_LIFE_LOW, landTempSprites[0]);
+        landTempTiles.Add(TemperatureLevel.G2_COLD_LIFE_LOW, landTempSprites[1]);
               
         // End Add sprites;
 
@@ -79,6 +79,10 @@ public class MapCreator : MonoBehaviour
 
 
             map = new Map(x, y, R2R4R6Ratio, seed, tempCurve, orthogonalRatio, diagonalRatio, rareHumidityConst, mainTileRatio);
+            
+            Debug.Log($"Map generation time = {System.DateTime.Now - time}");
+            time = System.DateTime.Now;
+
             map.mainDotSprite = mainDotSprite;
             map.CreateGameObjects(spritePrefab, mapCenter, isCopy: false);
             map.CreateGameObjects(spritePrefab, mapLeft, isCopy: true);
@@ -88,12 +92,13 @@ public class MapCreator : MonoBehaviour
             mapLeft.position = new Vector2(mapCenter.position.x - sizeX, mapCenter.position.y);
             mapRight.position = new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y);
 
+            // delete from here (Deactivated mapCopies)
             mapLeft.gameObject.SetActive(false);
             mapRight.gameObject.SetActive(false);
-            // delete from hete
+            // to here 
 
             map.SetSprites(groundTiles);
-            //map.SetSprites(landTempTiles);
+            map.SetSprites(landTempTiles);
 
 
             map.SetSpritesToObjects();

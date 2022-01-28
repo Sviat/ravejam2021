@@ -97,8 +97,8 @@ public class MapCreator : MonoBehaviour
             mapRight.position = new Vector2(mapCenter.position.x + sizeX, mapCenter.position.y);
 
             // delete from here (Deactivated mapCopies)
-            mapLeft.gameObject.SetActive(false);
-            mapRight.gameObject.SetActive(false);
+            //mapLeft.gameObject.SetActive(false);
+            //mapRight.gameObject.SetActive(false);
             // to here 
 
             map.SetSprites(groundTiles);

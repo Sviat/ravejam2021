@@ -1725,9 +1725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc71b731ba283b44a8f23790cbba4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 64
-  sizeY: 51
-  mapCreatorSeed: 6
+  sizeX: 32
+  sizeY: 31
+  mapCreatorSeed: 1
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
   mainDotSprite: {fileID: 2621643443015025942, guid: fd05d64586832ec49ad0dad28524e88d, type: 3}
   groundSprites:

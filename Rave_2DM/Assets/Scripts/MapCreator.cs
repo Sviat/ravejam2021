@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 public class MapCreator : MonoBehaviour
@@ -37,6 +38,8 @@ public class MapCreator : MonoBehaviour
     private (bool, bool, bool) RGB = (true, true, true);
     private bool rgbChanged = false;
 
+    public Text R2text, R4text, R6text, MTtext, SeedText;
+
     private void Start()
     {
         R2R4R6Ratio = new int[3] { 1, 1, 1 };
@@ -58,6 +61,7 @@ public class MapCreator : MonoBehaviour
         // End Add sprites;
 
         CreateMap(sizeX, sizeY, mapCreatorSeed);
+       
     }
 
     private bool CheckSize()
@@ -163,10 +167,63 @@ public class MapCreator : MonoBehaviour
             map.DrawTilesAll(RGB.Item1, RGB.Item2, RGB.Item3);
             rgbChanged = false;
         }
+
+
+        ChangeTextOverlay();
+    }
+
+    private void ChangeTextOverlay()
+    {
+        R2text.text = "R2 =" + R2R4R6Ratio[0].ToString();
+        R4text.text = "R4 =" + R2R4R6Ratio[1].ToString();
+        R6text.text = "R6 =" + R2R4R6Ratio[2].ToString();
+        MTtext.text = "MT =" + mainTileRatio.ToString();
+        SeedText.text = "Seed =" + mapCreatorSeed.ToString();
     }
 
     private void CenterMap()
     {
         transform.position =new Vector3(((float)sizeX) / -2.0f, ((float)sizeY) / -2.0f, transform.position.z);
+    }
+
+
+    public void ChangeR2()
+    {
+        R2R4R6Ratio[0] ++;
+    }
+    public void ChangeR4()
+    {
+        R2R4R6Ratio[1]++;
+    }
+    public void ChangeR6()
+    {
+        R2R4R6Ratio[2]++;
+    }
+
+    public void ChangeMainTileRatio(int addMT)
+    {
+        mainTileRatio += addMT;
+    }
+
+    public void ChangeSeed(int x)
+    {
+        mapCreatorSeed += x;
+    }
+
+    public void GenerateMap()
+    {
+        CreateMap(sizeX, sizeY, mapCreatorSeed);
+        rgbChanged = false;
+        RGB.Item1 = RGB.Item2 = RGB.Item3 = true;
+    }
+
+    public void ResetMap()
+    {
+        R2R4R6Ratio[0] = 1;
+        R2R4R6Ratio[1] = 1;
+        R2R4R6Ratio[2] =1;
+        mainTileRatio = 1;
+        mapCreatorSeed = 1;
+        GenerateMap();
     }
 }

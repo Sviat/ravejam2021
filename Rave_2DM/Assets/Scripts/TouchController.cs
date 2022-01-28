@@ -8,6 +8,7 @@ public class TouchController : MonoBehaviour, IPointerClickHandler, IDragHandler
     [SerializeField] private CameraController camera;
     private Vector2 f0start, f1start;
     private bool zoomNow = false;
+    private float zoomSpeed = 0.25f;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -66,6 +67,6 @@ public class TouchController : MonoBehaviour, IPointerClickHandler, IDragHandler
             f1start = f1;
         }
         float dir = Vector2.Distance(f0position, f1position) - Vector2.Distance(f1start, f0start);
-        camera.CameraZoom(dir*Time.deltaTime);
+        camera.CameraZoom(dir*Time.deltaTime*zoomSpeed);
     }
 }

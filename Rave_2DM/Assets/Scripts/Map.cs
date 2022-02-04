@@ -382,17 +382,23 @@ public class Map
             if (r2Count == 1) // I
             {
                 orthoHeights = new List<HeightLevel>() { HeightLevel.R3_COAST, HeightLevel.R3_COAST, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN };
-            }
-            else  //G
-            {
-                orthoHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN };
-            }
-
-            diagonalHeights = new List<HeightLevel>()
+                diagonalHeights = new List<HeightLevel>()
             {
                 HeightLevel.R3_COAST,
                 HeightLevel.R4_PLAIN
             };
+            }
+            else  //G
+            {
+                orthoHeights = new List<HeightLevel>() { HeightLevel.R5_HILLS, HeightLevel.R5_HILLS, HeightLevel.R4_PLAIN, HeightLevel.R4_PLAIN };
+
+
+                diagonalHeights = new List<HeightLevel>()
+            {
+                HeightLevel.R4_PLAIN,
+                HeightLevel.R5_HILLS
+            };
+            }
             return true;
         }
         else if (r6Count == 3) // FQ

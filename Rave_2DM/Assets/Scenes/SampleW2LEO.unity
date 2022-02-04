@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.5622189
+  m_AspectRatio: 2.429665
 --- !u!1 &186708342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1727,7 +1727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeX: 32
   sizeY: 31
-  mapCreatorSeed: 1
+  mapCreatorSeed: 40
   spritePrefab: {fileID: 7191867447436426743, guid: bbc8c727cf413884a9b455eed23a5e7b, type: 3}
   mainDotSprite: {fileID: 2621643443015025942, guid: fd05d64586832ec49ad0dad28524e88d, type: 3}
   groundSprites:

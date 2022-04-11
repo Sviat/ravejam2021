@@ -15,11 +15,11 @@ public class MapCreator : MonoBehaviour
     // Sprites Info
     [SerializeField] private Sprite[] groundSprites; // land, ocean, sea
     Dictionary<HeightLevel, Sprite> groundTiles;
+    
     [SerializeField] private Sprite[] landTempSprites; //
     Dictionary<TemperatureLevel, Sprite> landTempTiles;
-    [SerializeField] private Sprite[] coastListSprites; //
 
-    [SerializeField] private Sprite[] coastListSprites2; //
+    [SerializeField] private Sprite[] coastListSprites; //
 
     // End Sprites Info
 

@@ -11,36 +11,27 @@ public class Tile
     public Sprite tileSprite;
     public Sprite landscapeModificator;
     public Sprite resourceSprite;
-   
 
+    /*
     [SerializeField] private BuildingSlot buildingSlot;
     private Buildings BuiltGameObject = null;
     private bool canBuild;
     private TradeGoodsTypes good = TradeGoodsTypes.Null;
     [Range(0, 1)]
     private float remainingResourses = 1;
+    */
 
+    public int X => x;
+    public int Y => y;
+    public LandscapeCode Height => landCode;
+    public HeightLevel R => landCode.R;
+    public TemperatureLevel G => landCode.G;
+    public HumidityLevel B => landCode.B;
 
-    public int X 
+    public Tile(int x, int y)
     {
-        get
-        {
-            return x;
-        }
-    }
-
-    public int Y
-    {
-        get
-        {
-            return y;
-        }
-    }
-
-    public Tile(int _x, int _y)
-    {
-        x = _x;
-        y = _y;
+        this.x = x;
+        this.y = y;
         landCode = new LandscapeCode(-1, 0, 0); // Add Undefined to All fields
     }
 
@@ -51,14 +42,14 @@ public class Tile
         landCode = _h;
     }
 
-    public void SetLandscape (int heightR, int heightG, int heightB)
+    public void SetLandscape(int heightR, int heightG, int heightB)
     {
         landCode = new LandscapeCode(heightR, heightG, heightB);
     }
 
-    public void SetLandscape(LandscapeCode height)
+    public void SetLandscape(LandscapeCode landCode)
     {
-        this.landCode = height;
+        this.landCode = landCode;
     }
 
     public void SetHeight(HeightLevel height)
@@ -66,32 +57,11 @@ public class Tile
         this.landCode.R = height;
     }
 
-    public void AddHeight(LandscapeCode addValue)
+    public void AddLandscape(LandscapeCode addValue)
     {
         landCode += addValue;
     }
 
-    public LandscapeCode Height
-    {
-        get
-        {
-            return landCode;
-        }
-    }
 
-    public HeightLevel R
-    {
-        get { return landCode.R; }
-    }
-
-    public TemperatureLevel G
-    {
-        get { return landCode.G; }
-    }
-
-    public HumidityLevel B
-    {
-        get { return landCode.B; }
-    }
 
 }
